@@ -3,7 +3,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Image
+  Image,
+  ImageBackground,
 } from "react-native";
 import { useState } from "react";
 import { loginStyles } from "@/assets/styles/auth/loginStyles";
@@ -56,66 +57,75 @@ export default function RegisterForm({ onSubmit, onVolver }: Props) {
   };
 
   return (
-    <View style={loginStyles.container}>
+    <ImageBackground
+      source={require("@/assets/images/fondoBonito.png")} // 🔥 tu imagen
+      style={loginStyles.backgroundImage}
+      resizeMode="cover"
+    >
 
-      {/* Logo */}
-      <Image
-        source={require("@/assets/images/puntoClave.png")} 
-        style={loginStyles.logo}
-        resizeMode="contain"
-      />
+      {/* 🔹 Overlay oscuro para que se vea el texto */}
+      <View style={loginStyles.overlay}>
 
-      {/* Card */}
-      <View style={loginStyles.card}>
-        <Text style={loginStyles.title}>Crear Cuenta</Text>
-
-        <TextInput
-          style={loginStyles.input}
-          placeholder="Nombre completo"
-          placeholderTextColor="#999"
-          value={name}
-          onChangeText={setName}
+        {/* 🔹 Logo en esquina */}
+        <Image
+          source={require("@/assets/images/puntoClave.png")}
+          style={loginStyles.logoCorner}
+          resizeMode="contain"
         />
 
-        <TextInput
-          style={loginStyles.input}
-          placeholder="Correo (@gmail.com)"
-          placeholderTextColor="#999"
-          value={email}
-          onChangeText={setEmail}
-        />
+        {/* 🔹 Formulario */}
+        <View style={loginStyles.registerCard}>
+          <Text style={loginStyles.title}>Crear Cuenta</Text>
 
-        <TextInput
-          style={loginStyles.input}
-          placeholder="Contraseña"
-          placeholderTextColor="#999"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
+          <TextInput
+            style={loginStyles.input}
+            placeholder="Nombre completo"
+            placeholderTextColor="#ccc"
+            value={name}
+            onChangeText={setName}
+          />
 
-        {/* Error bonito */}
-        {error !== "" && (
-          <Text style={loginStyles.errorText}>
-            {error}
-          </Text>
-        )}
+          <TextInput
+            style={loginStyles.input}
+            placeholder="Correo (@gmail.com)"
+            placeholderTextColor="#ccc"
+            value={email}
+            onChangeText={setEmail}
+          />
 
-        {/* Botón register */}
-        <TouchableOpacity
-          style={loginStyles.button}
-          onPress={handleSubmit}
-        >
-          <Text style={loginStyles.buttonText}>Registrarse</Text>
-        </TouchableOpacity>
+          <TextInput
+            style={loginStyles.input}
+            placeholder="Contraseña"
+            placeholderTextColor="#ccc"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
 
-        {/* Volver */}
-        <TouchableOpacity onPress={onVolver}>
-          <Text style={loginStyles.registerText}>
-            ← Volver al login
-          </Text>
-        </TouchableOpacity>
+          {/* Error */}
+          {error !== "" && (
+            <Text style={loginStyles.errorText}>
+              {error}
+            </Text>
+          )}
+
+          {/* Botón */}
+          <TouchableOpacity
+            style={loginStyles.button}
+            onPress={handleSubmit}
+          >
+            <Text style={loginStyles.buttonText}>Registrarse</Text>
+          </TouchableOpacity>
+
+          {/* Volver */}
+          <TouchableOpacity onPress={onVolver}>
+            <Text style={loginStyles.registerText}>
+              ← Volver al login
+            </Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
-    </View>
+    </ImageBackground>
   );
 }

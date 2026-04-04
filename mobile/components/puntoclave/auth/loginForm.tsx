@@ -1,6 +1,17 @@
-import { View, Text, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ImageBackground,
+} from "react-native";
 import { useState } from "react";
 import { loginStyles } from "@/assets/styles/auth/loginStyles";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   onSubmit: (email: string, password: string) => void;
@@ -8,61 +19,81 @@ interface Props {
 }
 
 export default function LoginForm({ onSubmit, onRegister }: Props) {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <KeyboardAvoidingView
-    style={{ flex: 1 }}
-    behavior={Platform.OS === "ios" ? "padding" : "height"}
-  >
-    <View style={loginStyles.container}>
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <View style={loginStyles.container}>
 
-      {/* Logo */}
-      <Image
-        source={require("@/assets/images/puntoClave.png")} // cambia por tu logo
-        style={loginStyles.logo}
-        resizeMode="contain"
-      />
+        {/* 🔝 70% Imagen + Logo */}
+        <View style={loginStyles.topSection}>
+          <ImageBackground
+            source={require("@/assets/images/fondoBonito.png")} // cambia por tu imagen
+            style={loginStyles.backgroundImage}
+          >
+            <View style={loginStyles.overlay}>
+              <Image
+                source={require("@/assets/images/puntoClave.png")}
+                style={loginStyles.logo}
+              />
+            </View>
+          </ImageBackground>
+        </View>
 
-      {/* Card */}
-      <View style={loginStyles.card}>
-        <Text style={loginStyles.title}>Bienvenido a PuntoClave</Text>
-
-        <TextInput
-          style={loginStyles.input}
-          placeholder="Correo o usuario"
-          placeholderTextColor="#999"
-          value={email}
-          onChangeText={setEmail}
-        />
-
-        <TextInput
-          style={loginStyles.input}
-          placeholder="Contraseña"
-          placeholderTextColor="#999"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-
-        {/* Botón login */}
-        <TouchableOpacity
-          style={loginStyles.button}
-          onPress={() => onSubmit(email, password)}
+        {/* 🔽 30% Formulario */}
+        <LinearGradient
+          colors={["#ffffff", "#38bdf8"]}
+          style={loginStyles.bottomSection}
         >
-          <Text style={loginStyles.buttonText}>Entrar</Text>
-        </TouchableOpacity>
+          <View style={loginStyles.card}>
+            <Text style={loginStyles.title}>Inicia Sesion Porfavor</Text>
+            {/* Email */}
+            <View style={loginStyles.inputContainer}>
 
-        {/* Botón register */}
-        <TouchableOpacity onPress={onRegister}>
-          <Text style={loginStyles.registerText}>
-            ¿No tienes cuenta? Regístrate
-          </Text>
-        </TouchableOpacity>
+              <Ionicons name="mail-outline" size={20} color="#64748b" />
+              <TextInput
+                style={loginStyles.input}
+                placeholder="Correo electrónico"
+                placeholderTextColor="#94a3b8"
+                value={email}
+                onChangeText={setEmail}
+              />
+            </View>
+
+            {/* Password */}
+            <View style={loginStyles.inputContainer}>
+              <Ionicons name="lock-closed-outline" size={20} color="#64748b" />
+              <TextInput
+                style={loginStyles.input}
+                placeholder="Contraseña"
+                placeholderTextColor="#94a3b8"
+                secureTextEntry
+                value={password}
+                onChangeText={setPassword}
+              />
+            </View>
+
+            {/* Botón login */}
+            <TouchableOpacity
+              style={loginStyles.button}
+              onPress={() => onSubmit(email, password)}
+            >
+              <Text style={loginStyles.buttonText}>Entrar</Text>
+            </TouchableOpacity>
+
+            {/* Registro */}
+            <TouchableOpacity onPress={onRegister}>
+              <Text style={loginStyles.registerText}>
+                ¿No tienes cuenta? Regístrate
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </LinearGradient>
       </View>
-    </View>
     </KeyboardAvoidingView>
   );
 }

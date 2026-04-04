@@ -10,4 +10,4 @@ class ModelHasRole(models.Model):
 
     class Meta:
         db_table = "model_has_roles"
-        managed = False 
+        managed = False  
