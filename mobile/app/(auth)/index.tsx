@@ -2,6 +2,7 @@ import { useRouter } from "expo-router";
 import { Alert } from "react-native";
 import LoginForm from "@/components/puntoclave/auth/loginForm";
 import BASE_URL from "@/lib/api";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function Login() {
 
@@ -41,5 +42,9 @@ export default function Login() {
     router.push("/register"); 
   };
 
-  return <LoginForm onSubmit={handleLogin} onRegister={goToRegister} />;
+  return (
+    <SafeAreaProvider>
+      <LoginForm onSubmit={handleLogin} onRegister={goToRegister} />
+    </SafeAreaProvider>
+  );
 }

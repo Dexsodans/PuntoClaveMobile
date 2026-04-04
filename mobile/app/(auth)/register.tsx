@@ -2,6 +2,7 @@ import { useRouter } from "expo-router";
 import RegisterForm from "@/components/puntoclave/auth/registerForm";
 import { Alert } from "react-native";
 import BASE_URL from "@/lib/api";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function Register() {
 
@@ -35,5 +36,6 @@ export default function Register() {
     router.push("/(auth)"); 
   };
 
-  return <RegisterForm onSubmit={handleRegister} onVolver={goToLogin} />;
+  return <RegisterForm onSubmit={handleRegister} onVolver={goToLogin} />
+
 }
