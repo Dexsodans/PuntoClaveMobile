@@ -5,26 +5,33 @@ import { Platform } from "react-native";
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { palette } from "@/constants/Theme"; // ← reemplaza Colors
+import { Ionicons } from "@expo/vector-icons";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: palette.actionPrimary,     // celeste activo
+        tabBarInactiveTintColor: palette.textMuted,       // gris inactivo
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: "500",
+        },
+        tabBarStyle: Platform.select({
+          ios: {
+            position: "absolute",
+            borderTopColor: palette.borderLight,
+          },
+          default: {
+            backgroundColor: palette.bgPrimary,
+            borderTopColor: palette.borderLight,
+            borderTopWidth: 1,
+          },
+        }),
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
-          default: {},
-        }),
       }}
     >
       <Tabs.Screen
@@ -36,15 +43,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      {/* <Tabs.Screen
-        name="productos"
-        options={{
-          title: "Productos",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={22} name="house.fill" color={color} />
-          ),
-        }}
-      /> */}
+
       <Tabs.Screen
         name="index"
         options={{
@@ -64,6 +63,7 @@ export default function TabLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="permissions-demo"
         options={{
@@ -73,12 +73,22 @@ export default function TabLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="error-demo"
         options={{
           title: "Errors",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={22} name="exclamationmark.triangle.fill" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="carrito"
+        options={{
+          title: "Carrito",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="cart-outline" size={22} color={color} />
           ),
         }}
       />

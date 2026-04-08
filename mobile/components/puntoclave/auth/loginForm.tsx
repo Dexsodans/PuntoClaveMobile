@@ -14,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import AnimatedBackground from "@/components/puntoclave/auth/AnimatedBackground"; // ajusta el path
 
+
 interface Props {
   onSubmit: (email: string, password: string) => void;
   onRegister: () => void;

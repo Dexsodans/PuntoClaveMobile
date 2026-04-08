@@ -12,6 +12,8 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemeProvider as UIThemeProvider } from '@/components/ui/theme';
 import { ErrorBoundary } from '@/components/error-boundary';
+import { CarritoProvider } from "@/components/puntoclave/carrito/CarritoContext";
+
 
 // Prevent the splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -40,11 +42,13 @@ export default function RootLayout() {
         <BottomSheetModalProvider>
           <UIThemeProvider>
             <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-              <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="(auth)" />
-                <Stack.Screen name="(tabs)" />
-                <Stack.Screen name="+not-found" />
-              </Stack>
+              <CarritoProvider>
+                <Stack screenOptions={{ headerShown: false }}>
+                  <Stack.Screen name="(auth)" />
+                  <Stack.Screen name="(tabs)" />
+                  <Stack.Screen name="+not-found" />
+                </Stack>
+              </CarritoProvider>
               <StatusBar style="auto" />
             </ThemeProvider>
           </UIThemeProvider>

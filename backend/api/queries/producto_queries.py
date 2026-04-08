@@ -1,4 +1,12 @@
-from api.models.producto import Producto
+# api/services/producto_service.py
 
-def get_productos_activos():
-    return Producto.objects.filter(EST_PRO=True)
+from api.models.producto import Producto
+from django.db import connection
+
+
+def get_producto_by_id(producto_id):
+
+    try:
+        return Producto.objects.get(id=producto_id)
+    except Producto.DoesNotExist:
+        return None

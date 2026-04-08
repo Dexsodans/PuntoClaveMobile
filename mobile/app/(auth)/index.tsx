@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import LoginForm from "@/components/puntoclave/auth/loginForm";
 import BASE_URL from "@/lib/api";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
 
@@ -25,6 +26,11 @@ export default function Login() {
     const data: any = await response.json(); // 👈 aquí el fix rápido
 
     if (response.ok) {
+      // Guardar el token y la información del usuario en AsyncStorage
+      await AsyncStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
+      );
       console.log("Login exitoso", data);
       router.replace("/(tabs)");
     } else {
