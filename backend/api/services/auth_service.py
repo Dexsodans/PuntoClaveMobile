@@ -27,31 +27,28 @@ def register_user(data):
     email = data.get("email")
     password = data.get("password")
 
-    # 🔍 VALIDACIONES
+    #  VALIDACIONES
 
-    # nombre sin números
+  
     if re.search(r'\d', name):
         raise Exception("El nombre no debe contener números")
 
-    # email gmail
     if not email.endswith("@gmail.com"):
         raise Exception("El email debe ser @gmail.com")
 
-    # password mínimo
     if len(password) < 6:
         raise Exception("La contraseña debe tener al menos 6 caracteres")
 
-    # email único
     if User.objects.filter(email=email).exists():
         raise Exception("El email ya está registrado")
 
-    # 🔐 hashear contraseña tipo Laravel
+    # hash para el laravel xd
     hashed_password = bcrypt.hashpw(
         data["password"].encode(),
         bcrypt.gensalt()
     ).decode()
 
-    # 👤 crear usuario
+    #usuario
     user = User.objects.create(
         name=data["name"],
         email=data["email"],
@@ -60,7 +57,6 @@ def register_user(data):
         AP_MAT_USU="",
     )
 
-    # 🎯 asignar rol Cliente (id = 5)
     assign_role_to_user(user.id, 5)
 
     return user

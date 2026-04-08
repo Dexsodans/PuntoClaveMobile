@@ -74,7 +74,7 @@ export default function ProductosScreen() {
   const cartBadgeScale = useSharedValue(1);
   const cartIconViewRef = useRef<View>(null);
 
-  // Posición del ícono del carrito (se mide al hacer layout)
+  // Posición del ícono del carrito
   const cartPos = useRef({ x: 0, y: 0 });
 
   const handleCartLayout = () => {
@@ -105,14 +105,14 @@ export default function ProductosScreen() {
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
 
-      {/* Header */}
+
       <View style={styles.header}>
         <View>
           <Text style={styles.titulo}>Productos</Text>
           <Text style={styles.subtitulo}>Encuentra lo que necesitas</Text>
         </View>
 
-        {/* Ícono carrito */}
+
         <TouchableOpacity
           ref={cartIconViewRef}
           onLayout={handleCartLayout}
@@ -129,10 +129,10 @@ export default function ProductosScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Lista — le pasamos el callback */}
+
       <ProductosList onProductoAgregado={handleProductoAgregado} />
 
-      {/* Items voladores — se renderizan encima de todo */}
+
       {flyingItems.map(item => (
         <FlyingDot
           key={item.id}

@@ -5,7 +5,7 @@ import ProductoSkeleton from "./ProductoSkeleton";
 import BASE_URL from "@/lib/api";
 import { palette, spacing } from "@/constants/Theme";
 
-const SKELETON_COUNT = 5; // cuántos placeholders mostrar al inicio
+const SKELETON_COUNT = 5; 
 
 interface Props {
   onProductoAgregado: (x: number, y: number) => void;
