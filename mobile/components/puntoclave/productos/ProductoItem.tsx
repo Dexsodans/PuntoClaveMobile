@@ -51,7 +51,7 @@ function getStockPct(actual: number, max: number | null) {
 export default function ProductoItem({ producto, index, onProductoAgregado }: Props) {
   const scale = useSharedValue(1);
   const botonScale = useSharedValue(1);
-  const botonBg = useSharedValue(0); // 0 = celeste, 1 = verde
+  const botonBg = useSharedValue(0); 
   const btnRef = useRef<View>(null);
 
   const tieneOferta =

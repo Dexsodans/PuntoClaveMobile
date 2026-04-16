@@ -6,7 +6,7 @@ from api.queries.producto_queries import get_producto_by_id
 def agregar_al_carrito(user_id, producto_id):
 
     # obtener cliente
-    cliente = get_cliente_by_user_id(user_id)
+    cliente = Carrito.objects.filter(id_cli__id_usu=user_id).first()
 
     if not cliente:
         raise Exception("El usuario debe ser cliente")
