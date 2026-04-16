@@ -11,6 +11,6 @@ def listar_productos():
             "DESC_PRO": p.DESC_PRO,
             "PRECIO_VENTA_PRO": float(p.PRECIO_VENTA_PRO) if p.PRECIO_VENTA_PRO else 0,
             "IMAGEN_PRO": p.IMAGEN_PRO
-        })
-
+        })  
+    
     return data

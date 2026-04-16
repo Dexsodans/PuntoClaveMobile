@@ -5,6 +5,7 @@ from api.views.auth_view import LoginView
 from api.views.auth_view import RegisterView 
 from api.views.proveedor_view import ProveedorView, ProveedorDetailView
 from api.views.producto_view import ProductoView
+from django.urls import path
 
 urlpatterns = [
     path("login/", LoginView.as_view()),
