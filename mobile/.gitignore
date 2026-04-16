@@ -39,3 +39,9 @@ yarn-error.*
 
 expo-env.d.ts
 # @end expo-cli sync
+
+##problemas nuevos de la migracion en django
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
