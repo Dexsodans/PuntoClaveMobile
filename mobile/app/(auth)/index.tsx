@@ -9,7 +9,7 @@ export default function Login() {
 
   const router = useRouter();
 
-    const handleLogin = async (email: string, password: string) => {
+const handleLogin = async (email: string, password: string) => {
 
   try {
     const response = await fetch(`${BASE_URL}/api/login/`, {
@@ -23,18 +23,25 @@ export default function Login() {
       }),
     });
 
-    const data: any = await response.json(); // 👈 aquí el fix rápido
+    const data:any = await response.json();
 
     if (response.ok) {
-      // Guardar el token y la información del usuario en AsyncStorage
+      console.log(data.message , "holaxd");
+
+      // guardar token
+      await AsyncStorage.setItem("token", data.token);
+
+      // guardar usuario
       await AsyncStorage.setItem(
         "user",
         JSON.stringify(data.user)
       );
-      console.log("Login exitoso", data);
+
+
+
       router.replace("/(tabs)");
+
     } else {
-      console.log("Error:", data);
       Alert.alert("Error", data.error || "Error al iniciar sesión");
     }
 

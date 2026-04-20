@@ -6,6 +6,9 @@ from api.services.auth_service import login_user
 #registro
 from api.services.auth_service import register_user
 
+#token
+from rest_framework_simplejwt.tokens import RefreshToken
+
 
 class LoginView(APIView):
 
@@ -22,8 +25,15 @@ class LoginView(APIView):
                 status=401
             )
 
+        # generar JWT
+        refresh = RefreshToken.for_user(user)
+
         return Response({
             "message": "Login exitoso",
+
+            "token": str(refresh.access_token),
+            "refresh": str(refresh),
+
             "user": {
                 "id": user.id,
                 "name": user.name,
