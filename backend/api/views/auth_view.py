@@ -8,6 +8,8 @@ from api.services.auth_service import register_user
 
 #token
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken
+
 
 
 class LoginView(APIView):

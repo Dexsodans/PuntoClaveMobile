@@ -4,6 +4,7 @@ import ProductoItem from "./ProductoItem";
 import ProductoSkeleton from "./ProductoSkeleton";
 import BASE_URL from "@/lib/api";
 import { palette, spacing } from "@/constants/Theme";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SKELETON_COUNT = 5; 
 
@@ -26,7 +27,17 @@ export default function ProductosList({ onProductoAgregado }: Props) {
       if (currentPage === 1) setLoading(true);
       else setLoadingMore(true);
 
-      const response = await fetch(`${BASE_URL}/api/productos/?page=${currentPage}`);
+      const token = await AsyncStorage.getItem("token");
+      console.log('🔑 Token para fetchProductos:', token);
+
+      const response = await fetch(
+      `${BASE_URL}/api/productos/?page=${currentPage}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
       const data: any = await response.json();
 
       setProductos(prev => [...prev, ...data.data]);
