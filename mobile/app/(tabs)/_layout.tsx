@@ -8,8 +8,10 @@ import TabBarBackground from "@/components/ui/TabBarBackground";
 import { palette } from "@/constants/Theme"; // ← reemplaza Colors
 import { Ionicons } from "@expo/vector-icons";
 
+
 export default function TabLayout() {
   return (
+
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: palette.actionPrimary,     // celeste activo
@@ -35,15 +37,14 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="proveedores"
+        name="productos"
         options={{
-          title: "Proveedores",
+          title: "Productos",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={22} name="house.fill" color={color} />
+            <Ionicons name="storefront-outline" size={22} color={color} />
           ),
         }}
       />
-
       <Tabs.Screen
         name="index"
         options={{
@@ -93,5 +94,6 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+
   );
 }

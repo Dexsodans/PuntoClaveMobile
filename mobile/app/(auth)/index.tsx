@@ -37,9 +37,7 @@ const handleLogin = async (email: string, password: string) => {
         JSON.stringify(data.user)
       );
 
-
-
-      router.replace("/(tabs)");
+      router.replace("/(tabs)/productos");
 
     } else {
       Alert.alert("Error", data.error || "Error al iniciar sesión");

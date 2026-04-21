@@ -104,8 +104,6 @@ export default function ProductosScreen() {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-
-
       <View style={styles.header}>
         <View>
           <Text style={styles.titulo}>Productos</Text>
