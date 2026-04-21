@@ -2,11 +2,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from api.services.carrito_service import agregar_al_carrito, get_carrito_by_cliente_id
 from api.queries.cliente_queries import get_cliente_by_user_id
-
+from api.middleware.jwt_auth import get_user_from_token
 
 class CarritoView(APIView):
 
     def post(self, request):
+
+        user = get_user_from_token(request)
+        if not user:
+            return Response({"error": "No autorizado"}, status=401)
 
         user_id = request.data.get("user_id")
         producto_id = request.data.get("producto_id")
@@ -19,7 +23,8 @@ class CarritoView(APIView):
                 "message": "Producto agregado al carrito",
                 "carrito": {
                     "id": carrito.id,
-                    "producto_id": carrito.id_pro,
+                    "id_cli": carrito.id_cli.id,
+                    "producto_id": carrito.id_pro.id,
                     "cantidad": carrito.CANT_CAR,
                     "subtotal": carrito.SUB_TOTAL_CAR
                 }
@@ -33,7 +38,9 @@ class CarritoView(APIView):
 
 
     def get(self, request):
-
+        user = get_user_from_token(request)
+        if not user:
+            return Response({"error": "No autorizado"}, status=401)
         user_id = request.GET.get("user_id")
 
         if not user_id:

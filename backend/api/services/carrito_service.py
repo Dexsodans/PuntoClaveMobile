@@ -6,7 +6,7 @@ from api.queries.producto_queries import get_producto_by_id
 def agregar_al_carrito(user_id, producto_id):
 
     # obtener cliente
-    cliente = Carrito.objects.filter(id_cli__id_usu=user_id).first()
+    cliente = get_cliente_by_user_id(user_id)
 
     if not cliente:
         raise Exception("El usuario debe ser cliente")
@@ -24,8 +24,8 @@ def agregar_al_carrito(user_id, producto_id):
     subtotal = precio * cantidad
 
     carrito = Carrito.objects.create(
-        id_cli=cliente.id,
-        id_pro=producto.id,
+        id_cli=cliente,
+        id_pro=producto,
         CANT_CAR=cantidad,
         SUB_TOTAL_CAR=subtotal
     )
