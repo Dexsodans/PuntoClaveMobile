@@ -40,7 +40,15 @@ export default function ProductosList({ onProductoAgregado }: Props) {
     );
       const data: any = await response.json();
 
-      setProductos(prev => [...prev, ...data.data]);
+      setProductos(prev => {
+        const nuevos = [...prev, ...data.data];
+
+        const unicos = Array.from(
+          new Map(nuevos.map(p => [p.id, p])).values()
+        );
+
+        return unicos;
+      });
       setHasMore(data.hasMore);
       setPage(currentPage + 1);
     } catch (error) {

@@ -94,12 +94,14 @@ const handleAgregar = async (e: any) => {
     try {
 
       const userData = await AsyncStorage.getItem("user");
+      const token = await AsyncStorage.getItem("token");
       const user = JSON.parse(userData || "{}");
 
       const response = await fetch(`${BASE_URL}/api/carrito/`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           user_id: user.id,

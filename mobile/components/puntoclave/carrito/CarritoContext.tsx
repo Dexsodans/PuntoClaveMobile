@@ -1,13 +1,9 @@
 import React, { createContext, useContext, useRef, useState } from "react";
 import { View } from "react-native";
 
-interface CartPosition {
-  x: number;
-  y: number;
-}
-
 interface CarritoContextType {
   cartIconRef: React.RefObject<View>;
+  cartPos: React.MutableRefObject<{ x: number; y: number }>; // 👈
   conteo: number;
   setConteo: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -15,11 +11,12 @@ interface CarritoContextType {
 const CarritoContext = createContext<CarritoContextType>({} as CarritoContextType);
 
 export function CarritoProvider({ children }: { children: React.ReactNode }) {
-  const cartIconRef:any = useRef<View>(null);
+  const cartIconRef = useRef<View>(null);
+  const cartPos = useRef({ x: 0, y: 0 }); // 👈
   const [conteo, setConteo] = useState<number>(0);
 
   return (
-    <CarritoContext.Provider value={{ cartIconRef, conteo, setConteo }}>
+    <CarritoContext.Provider value={{ cartIconRef, cartPos, conteo, setConteo }}>
       {children}
     </CarritoContext.Provider>
   );

@@ -189,11 +189,7 @@ export default function ErrorDemo() {
             </Text>
             <View className="bg-muted p-3 rounded-md mb-4">
               <Text variant="code" className="text-xs">
-                {`// Automatically catches all errors
-// Already wrapped in app/_layout.tsx
-<ErrorBoundary>
-  <YourApp />
-</ErrorBoundary>`}
+
               </Text>
             </View>
 
@@ -202,18 +198,7 @@ export default function ErrorDemo() {
             </Text>
             <View className="bg-muted p-3 rounded-md mb-4">
               <Text variant="code" className="text-xs">
-                {`import { useIsOnline } from '@/hooks/useNetworkConnection';
-import { NetworkError } from '@/components/error-boundary';
 
-function MyScreen() {
-  const isOnline = useIsOnline();
-  
-  if (!isOnline) {
-    return <NetworkError onRetry={refetch} />;
-  }
-  
-  return <YourContent />;
-}`}
               </Text>
             </View>
 
@@ -222,17 +207,6 @@ function MyScreen() {
             </Text>
             <View className="bg-muted p-3 rounded-md">
               <Text variant="code" className="text-xs">
-                {`import { GeneralError } from '@/components/error-boundary';
-
-if (error) {
-  return (
-    <GeneralError
-      title="Failed to load data"
-      message={error.message}
-      onRetry={handleRetry}
-    />
-  );
-}`}
               </Text>
             </View>
           </CardContent>

@@ -8,6 +8,8 @@ import BASE_URL from "@/lib/api";
 import { styles } from "@/assets/styles/tabs/carritoStyles";
 import CarritoList from "@/components/puntoclave/carrito/CarritoList";
 
+
+
 interface ItemCarrito {
   id: number;
   NOM_PRO: string;
@@ -28,9 +30,14 @@ export default function CarritoScreen() {
     try {
 
       const userData = await AsyncStorage.getItem("user");
+      const token = await AsyncStorage.getItem("token");
       const user = JSON.parse(userData || "{}");
 
-      const res = await fetch(`${BASE_URL}/api/carrito/?user_id=${user.id}`);
+      const res = await fetch(`${BASE_URL}/api/carrito/?user_id=${user.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data: any = await res.json();
 
       setItems(data.data || []);

@@ -93,6 +93,7 @@ export const palette = {
   textSecondary: colors.neutral[500],   // gris medio
   textMuted:     colors.neutral[400],   // gris claro
   textInverse:   colors.neutral[0],     // blanco (sobre fondos oscuros)
+  textNegative:  colors.error.main,      // rojo (para errores)
 
   // Acción principal
   actionPrimary:       colors.sky[400],     // celeste — botones principales

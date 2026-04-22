@@ -27,8 +27,11 @@ class LoginView(APIView):
                 status=401
             )
 
-        # generar JWT
         refresh = RefreshToken.for_user(user)
+
+        avatar_url = None
+        if user.AVATAR_USU:
+            avatar_url = request.build_absolute_uri("/media/" + user.AVATAR_USU)
 
         return Response({
             "message": "Login exitoso",
@@ -38,8 +41,9 @@ class LoginView(APIView):
 
             "user": {
                 "id": user.id,
-                "name": user.name,
-                "email": user.email
+                "name": user.name + " " + user.AP_PAT_USU + " " + user.AP_MAT_USU,
+                "email": user.email,
+                "avatar": avatar_url
             }
         })
 class RegisterView(APIView):

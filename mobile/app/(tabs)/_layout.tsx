@@ -55,7 +55,7 @@ export default function TabLayout() {
         }}
       />
 
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="menu-demo"
         options={{
           title: "Menu",
@@ -63,7 +63,7 @@ export default function TabLayout() {
             <IconSymbol size={22} name="menucard" color={color} />
           ),
         }}
-      />
+      /> */}
 
       <Tabs.Screen
         name="permissions-demo"
@@ -75,7 +75,7 @@ export default function TabLayout() {
         }}
       />
 
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="error-demo"
         options={{
           title: "Errors",
@@ -83,7 +83,7 @@ export default function TabLayout() {
             <IconSymbol size={22} name="exclamationmark.triangle.fill" color={color} />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="carrito"
         options={{
