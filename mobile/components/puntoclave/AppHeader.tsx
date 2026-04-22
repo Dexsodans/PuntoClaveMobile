@@ -62,9 +62,13 @@ export default function AppHeader({ titulo, subtitulo }: Props) {
             </Pressable>
           </DrawerTrigger>
 
-          <DrawerContent>
+          <DrawerContent >
             <DrawerHeader>
-              <DrawerTitle><UIText variant="h4">Menú</UIText></DrawerTitle>
+              <DrawerTitle>
+                <UIText variant="h4" style={{ color: palette.accent }}>
+                  Menú
+                </UIText>
+              </DrawerTitle>
             </DrawerHeader>
 
             <DrawerItem icon={<HomeIcon size={20} color={palette.textPrimary} />}
@@ -119,7 +123,7 @@ export default function AppHeader({ titulo, subtitulo }: Props) {
           style={styles.iconBtn}
           activeOpacity={0.8}
         >
-          <Ionicons name="cart-outline" size={24} color={palette.actionSecondary} />
+          <Ionicons name="cart-outline" size={24} color={palette.textInverse} />
           {conteo > 0 && (
             <Animated.View style={[styles.badge, badgeAnimStyle]}>
               <Text style={styles.badgeText}>{conteo > 99 ? "99+" : conteo}</Text>
@@ -128,7 +132,7 @@ export default function AppHeader({ titulo, subtitulo }: Props) {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.iconBtn} activeOpacity={0.8}>
-          <Ionicons name="notifications-outline" size={24} color={palette.actionSecondary} />
+          <Ionicons name="notifications-outline" size={24} color={palette.textInverse} />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.iconBtn} activeOpacity={0.8}>
@@ -138,7 +142,7 @@ export default function AppHeader({ titulo, subtitulo }: Props) {
               style={styles.avatar}
             />
           ) : (
-            <Ionicons name="person-outline" size={24} color={palette.actionSecondary} />
+            <Ionicons name="person-outline" size={24} color={palette.textInverse} />
           )}
 
           <Text style={styles.iconText}>{user?.name || "Usuario"}</Text>
@@ -204,13 +208,13 @@ const styles = StyleSheet.create({
     gap: 6,              // espacio entre icono y texto
     paddingHorizontal: 10,
     paddingVertical: 6,
-    backgroundColor: palette.bgTertiary,
+    backgroundColor: palette.accent,
     borderRadius: radius.lg,
     borderWidth: 1,
     borderColor: palette.borderLight,
   },
   iconText: {
-  color: palette.actionSecondary,
+  color: palette.textInverse,
   fontSize: 14,
 },
   badge: {

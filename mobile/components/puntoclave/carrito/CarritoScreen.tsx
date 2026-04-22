@@ -10,6 +10,7 @@ import CarritoList from "@/components/puntoclave/carrito/CarritoList";
 
 
 
+
 interface ItemCarrito {
   id: number;
   NOM_PRO: string;

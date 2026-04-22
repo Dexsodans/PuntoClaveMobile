@@ -1,0 +1,40 @@
+from api.models.pedido_model import Pedido
+from api.models.ubicacion_model import Ubicacion
+from api.queries.pedidos_queries import *
+from rest_framework.response import Response
+import datetime
+from api.queries.cliente_queries import get_cliente_by_user_id
+
+def get_all():
+    return Pedido.objects.all().values()
+
+def create(id_usu, id_ubi, TOTAL_PEDI):
+    #para tener cliente
+    cliente = get_cliente_by_user_id(id_usu)
+
+    if not cliente:
+        return Response({
+            "success": False,
+            "message": "Cliente no encontrado"
+        }, status=404)
+    #para tener ubicacion
+    ubicacion = Ubicacion.objects.filter(id=id_ubi).first()
+    if not ubicacion:
+        return Response({
+            "success": False,
+            "message": "Ubicación no encontrada"
+        }, status=404)
+
+    last_id = get_last_id()
+    id = last_id + 1
+
+    pedido = Pedido(
+        COD_PEDI=f"PEDI-{str(id).zfill(5)}",
+        FECHA_PEDI=datetime.datetime.now(),
+        id_cli=cliente,   # ← usar directamente
+        id_ubi=ubicacion,
+        TOTAL_PEDI=TOTAL_PEDI
+    )
+
+    pedido.save()
+    return pedido
