@@ -38,3 +38,14 @@ def create(id_usu, id_ubi, TOTAL_PEDI):
 
     pedido.save()
     return pedido
+
+def get_for_cliente(id_usu):
+
+    cliente = get_cliente_by_user_id(id_usu)
+
+    if not cliente:
+        return None
+
+    pedidos = Pedido.objects.filter(id_cli=cliente.id).values()
+
+    return pedidos
