@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import BASE_URL from "@/lib/api";
 import { styles } from "@/assets/styles/tabs/carritoStyles";
 import CarritoList from "@/components/puntoclave/carrito/CarritoList";
+import { useRouter } from "expo-router";
 
 
 
@@ -21,6 +22,7 @@ interface ItemCarrito {
 }
 
 export default function CarritoScreen() {
+  const router = useRouter();
 
   const insets = useSafeAreaInsets();
 
@@ -74,9 +76,16 @@ export default function CarritoScreen() {
             <Text style={styles.totalValor}>Bs. {total.toFixed(2)}</Text>
           </View>
 
-          <TouchableOpacity style={styles.btnCheckout} activeOpacity={0.85}>
+          <TouchableOpacity style={styles.btnCheckout} activeOpacity={0.85}
+          onPress={() =>
+              router.push({
+                pathname: "/(tabs)/ConfirmarPedido",
+                params: { total: total, items: JSON.stringify(items) }
+              })
+            }>
             <Ionicons name="checkmark-circle-outline" size={20} color="#fff" />
             <Text style={styles.btnCheckoutText}>Confirmar pedido</Text>
+            
           </TouchableOpacity>
         </View>
       )}

@@ -14,22 +14,3 @@ class DetallePedido(models.Model):
     class Meta:
         db_table = "detalle_pedidos"
 
-
-"""         Schema::create('detalle_pedidos', function (Blueprint $table) {
-            $table->id();
-
-            // Claves foráneas
-            $table->string('COD_DET_PEDI')->nullable();
-            $table->unsignedBigInteger('id_pedi');
-            $table->foreign('id_pedi')->references('id')->on('pedidos');
-
-            $table->unsignedBigInteger('id_pro');
-            $table->foreign('id_pro')->references('id')->on('productos');
-
-            // Cantidad y subtotal
-            $table->integer('CANT_DET_PEDI');
-            $table->decimal('SUB_TOTAL_DET_PEDI', 10, 2);
-            $table->boolean('EST_DET_PEDI')->default(true);
-
-            $table->timestamps();
-        }); """

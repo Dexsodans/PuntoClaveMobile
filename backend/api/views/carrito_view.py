@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from api.services.carrito_service import agregar_al_carrito, get_carrito_by_cliente_id
+from api.services.carrito_service import agregar_al_carrito, get_carrito_by_cliente_id, limpiar_carrito
 from api.queries.cliente_queries import get_cliente_by_user_id
 from api.middleware.jwt_auth import get_user_from_token
 
@@ -75,4 +75,30 @@ class CarritoView(APIView):
         return Response({
             "success": True,
             "data": data
+        })
+    def delete(self, request):
+        user = get_user_from_token(request)
+        if not user:
+            return Response({"error": "No autorizado"}, status=401)
+        user_id = request.data.get("user_id")
+
+        if not user_id:
+            return Response({
+                "success": False,
+                "message": "user_id requerido"
+            }, status=400)
+
+        cliente = get_cliente_by_user_id(user_id)
+
+        if not cliente:
+            return Response({
+                "success": False,
+                "message": "Cliente no encontrado"
+            }, status=404)
+
+        limpiar_carrito(cliente.id)
+
+        return Response({
+            "success": True,
+            "message": "Carrito limpiado"
         })

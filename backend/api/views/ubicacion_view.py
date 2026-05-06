@@ -32,7 +32,7 @@ class UbicacionView(APIView):
                 "ubicacion creada": {
                     "id": ubicacion.id,
                     "COD_UBI": ubicacion.COD_UBI,
-                    "COORDENADAS": "Latitud: "+ ubicacion.LATITUD_UBI + "y Longitud: "+ubicacion.LONGITUD_UBI,
+                    "COORDENADAS": f"Latitud: {ubicacion.LATITUD_UBI} y Longitud: {ubicacion.LONGITUD_UBI}",
                     "DIRECCION_UBI": ubicacion.DIRECCION_UBI,
                 }
             })

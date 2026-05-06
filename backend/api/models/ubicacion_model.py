@@ -5,8 +5,8 @@ from api.models.producto import Producto
 
 class Ubicacion(models.Model):
     COD_UBI = models.CharField(max_length=15, null=True, blank=True)
-    LATITUD_UBI = models.DecimalField(max_digits=10, decimal_places=7, null=True, blank=True)
-    LONGITUD_UBI = models.DecimalField(max_digits=10, decimal_places=7, null=True, blank=True)
+    LATITUD_UBI = models.DecimalField(max_digits=20, decimal_places=20, null=True, blank=True)
+    LONGITUD_UBI = models.DecimalField(max_digits=20, decimal_places=20, null=True, blank=True)
     DIRECCION_UBI = models.CharField(max_length=255, null=True, blank=True)
     EST_UBI = models.BooleanField(default=True)
 

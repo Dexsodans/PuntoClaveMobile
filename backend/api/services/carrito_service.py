@@ -34,3 +34,6 @@ def agregar_al_carrito(user_id, producto_id):
 
 def get_carrito_by_cliente_id(cliente_id):
     return Carrito.objects.filter(id_cli=cliente_id).select_related("id_pro")
+
+def limpiar_carrito(cliente_id):
+    Carrito.objects.filter(id_cli=cliente_id).delete()

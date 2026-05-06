@@ -8,7 +8,7 @@ from api.queries.cliente_queries import get_cliente_by_user_id
 def get_all():
     return Pedido.objects.all().values()
 
-def create(id_usu, id_ubi, TOTAL_PEDI):
+def create(id_usu, id_ubi, TOTAL_PEDI, FECHA_PEDI):
     #para tener cliente
     cliente = get_cliente_by_user_id(id_usu)
 
@@ -30,7 +30,7 @@ def create(id_usu, id_ubi, TOTAL_PEDI):
 
     pedido = Pedido(
         COD_PEDI=f"PEDI-{str(id).zfill(5)}",
-        FECHA_PEDI=datetime.datetime.now(),
+        FECHA_PEDI=FECHA_PEDI,
         id_cli=cliente,   # ← usar directamente
         id_ubi=ubicacion,
         TOTAL_PEDI=TOTAL_PEDI

@@ -93,6 +93,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="ConfirmarPedido"
+        options={{
+          title: "Pedido",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="navigate-outline" size={22} color={color} />
+          ),
+        }}
+      />
     </Tabs>
 
   );

@@ -14,21 +14,3 @@ class Pedido(models.Model):
 
     class Meta:
         db_table = "pedidos"
-
-
-"""         Schema::create('pedidos', function (Blueprint $table) {
-            $table->id();
-
-            // Clave foránea al cliente
-            $table->string('COD_PEDI',15)->nullable();
-            $table->unsignedBigInteger('id_cli');
-            $table->foreign('id_cli')->references('id')->on('clientes');
-            $table->unsignedBigInteger('id_ubi');
-            $table->foreign('id_ubi')->references('id')->on('ubicaciones');
-
-            $table->dateTime('FECHA_PEDI');
-            $table->decimal('TOTAL_PEDI', 10, 2);
-            $table->integer('EST_PEDI')->default(1); // 1 = pendiente, 2 = en camino, 3 = entregado, 4 = cancelado
-
-            $table->timestamps();
-        }); """

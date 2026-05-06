@@ -31,8 +31,9 @@ class PedidoView(APIView):
         id_usu = request.data.get("id_usu")
         id_ubi = request.data.get("id_ubi")
         TOTAL_PEDI = request.data.get("TOTAL_PEDI")
+        FECHA_PEDI = request.data.get("FECHA_PEDI")
 
-        pedido = create(id_usu, id_ubi, TOTAL_PEDI)
+        pedido = create(id_usu, id_ubi, TOTAL_PEDI, FECHA_PEDI)
 
         return Response({
                 "message": "Pedido creado con exito",
@@ -42,6 +43,7 @@ class PedidoView(APIView):
                     "id_cli": pedido.id_cli.id,
                     "id_ubi": pedido.id_ubi.id,
                     "TOTAL_PEDI": pedido.TOTAL_PEDI,
+                    "FECHA_PEDI": pedido.FECHA_PEDI,
                 }
             })
         
