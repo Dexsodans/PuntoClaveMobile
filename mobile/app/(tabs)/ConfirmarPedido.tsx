@@ -13,7 +13,7 @@ export default function ConfirmarPedidoScreen() {
     const router = useRouter();
     const params = useLocalSearchParams();
 
-    const items = JSON.parse(params.items as string);
+    const items = params.items ? JSON.parse(params.items as string) : [];
     const total = Number(params.total);
 
     const [marker, setMarker] = useState<any>(null);

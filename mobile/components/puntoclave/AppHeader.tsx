@@ -81,6 +81,13 @@ export default function AppHeader({ titulo, subtitulo }: Props) {
               <UIText>Productos</UIText>
             </DrawerItem>
 
+            <DrawerItem
+              icon={<Ionicons name="receipt-outline" size={20} color={palette.textPrimary} />}
+              onPress={() => { setDrawerOpen(false); router.push("/(tabs)/pedidos"); }}
+            >
+              <UIText>Pedidos</UIText>
+            </DrawerItem>
+
             {/* <DrawerItem icon={<UserIcon size={20} color={palette.textPrimary} />}
               onPress={() => { setDrawerOpen(false); router.push("/perfil"); }}>
               <UIText>Perfil</UIText>
@@ -131,9 +138,9 @@ export default function AppHeader({ titulo, subtitulo }: Props) {
           )}
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconBtn} activeOpacity={0.8}>
+        {/* <TouchableOpacity style={styles.iconBtn} activeOpacity={0.8}>
           <Ionicons name="notifications-outline" size={24} color={palette.textInverse} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity style={styles.iconBtn} activeOpacity={0.8}>
           {user?.avatar ? (

@@ -65,13 +65,37 @@ export default function TabLayout() {
         }}
       /> */}
 
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="permissions-demo"
         options={{
           title: "Permissions",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={22} name="checkmark.shield.fill" color={color} />
           ),
+        }}
+      /> */}
+      <Tabs.Screen
+        name="mapa"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="ConfirmarPedido"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="permissions-demo"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="pedidos"
+        options={{
+          href: null
         }}
       />
 
@@ -93,15 +117,15 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="ConfirmarPedido"
+      {/* <Tabs.Screen
+        name="pedidos"
         options={{
           title: "Pedido",
           tabBarIcon: ({ color }) => (
             <Ionicons name="navigate-outline" size={22} color={color} />
           ),
         }}
-      />
+      /> */}
     </Tabs>
 
   );
