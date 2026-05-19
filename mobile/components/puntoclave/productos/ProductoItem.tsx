@@ -89,7 +89,7 @@ const handleAgregar = async (e: any) => {
 
     onProductoAgregado(pageX, pageY);
 
-    console.log("CLICK:", pageX, pageY);
+    //console.log("CLICK:", pageX, pageY);
 
     try {
 

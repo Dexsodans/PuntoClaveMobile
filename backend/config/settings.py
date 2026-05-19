@@ -148,3 +148,5 @@ SIMPLE_JWT = {
         "rest_framework.permissions.IsAuthenticated",
     ),
 } """
+
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")

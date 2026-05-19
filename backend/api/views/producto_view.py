@@ -1,43 +1,37 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from api.services.producto_service import *
-import requests
+from rest_framework import status
 
-##para endpoints
-from api.middleware.jwt_auth import get_user_from_token
-from rest_framework.views import APIView
+from api.services.producto_service import get_productos_inventario
+
 
 class ProductoView(APIView):
-    #permission_classes = [IsAuthenticated]
-
-
-    """ def get(self, request):
-        data = get_all()
-
-        for producto in data:
-            producto["IMAGEN_PRO"]= request.build_absolute_uri("/media/" + producto["IMAGEN_PRO"])
-        return Response(data) """
-    
 
     def get(self, request):
-        user = get_user_from_token(request)
-        if not user:
-            return Response({"error": "No autorizado"}, status=401)
-        page = int(request.GET.get("page", 1))
-        limit = 5
+        try:
+            page = int(request.query_params.get("page", 1))
+            page_size = 5
 
-        data = get_productos_inventario()
+            id_prov = request.query_params.get("id_prov")
 
-        start = (page - 1) * limit
-        end = start + limit
+            # obtener datos
+            data = get_productos_inventario(id_prov)
 
-        productos = data[start:end]
+            # paginación manual
+            start = (page - 1) * page_size
+            end = start + page_size
 
-        for producto in productos:
-            producto["IMAGEN_PRO"] = request.build_absolute_uri("/media/" + producto["IMAGEN_PRO"])
+            paginated_data = data[start:end]
 
-        return Response({
-            "page": page,
-            "hasMore": end < len(data),
-            "data": productos
-        })
+            has_more = len(data) > end
+
+            return Response({
+                "page": page,
+                "hasMore": has_more,
+                "data": paginated_data
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                "error": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

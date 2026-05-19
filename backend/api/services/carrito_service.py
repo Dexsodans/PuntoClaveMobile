@@ -27,9 +27,9 @@ def agregar_al_carrito(user_id, producto_id):
         id_cli=cliente,
         id_pro=producto,
         CANT_CAR=cantidad,
+
         SUB_TOTAL_CAR=subtotal
     )
-
     return carrito
 
 def get_carrito_by_cliente_id(cliente_id):

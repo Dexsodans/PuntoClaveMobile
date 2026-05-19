@@ -9,6 +9,10 @@ from api.views.carrito_view import CarritoView
 from api.views.ubicacion_view import UbicacionView
 from api.views.pedido_view import PedidoView
 from api.views.detalle_pedido_view import DetallePedidoView
+from api.views.cliente_view import ClienteView
+from api.views.compra_view import CompraView
+from api.views.detalle_compra_view import DetalleCompraView
+from api.views.ocr_view import OcrFacturaView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -25,6 +29,10 @@ urlpatterns = [
     path("carrito/", CarritoView.as_view()),
     path("ubicaciones/", UbicacionView.as_view()),
     path("pedidos/", PedidoView.as_view()),
-    path("detalle_pedidos/", DetallePedidoView.as_view())
+    path("detalle_pedidos/", DetallePedidoView.as_view()),
+    path("clientes/", ClienteView.as_view()),
+    path("compras/", CompraView.as_view()),
+    path("detalle_compras/", DetalleCompraView.as_view()),
+    path("ocr/", OcrFacturaView.as_view()),
 ]
 

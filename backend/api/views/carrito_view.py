@@ -19,6 +19,7 @@ class CarritoView(APIView):
 
             carrito = agregar_al_carrito(user_id, producto_id)
 
+
             return Response({
                 "message": "Producto agregado al carrito",
                 "carrito": {

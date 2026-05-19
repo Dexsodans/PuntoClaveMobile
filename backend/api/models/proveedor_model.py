@@ -14,4 +14,4 @@ class Proveedor(models.Model):
 
     class Meta:
         db_table = "proveedores"
-        managed = False  # 👈 porque viene de Laravel
+        managed = False  

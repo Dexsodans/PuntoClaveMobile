@@ -9,6 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const SKELETON_COUNT = 5; 
 
 interface Props {
+  proveedorId?: number;
   onProductoAgregado: (x: number, y: number) => void;
 }
 

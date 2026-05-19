@@ -121,6 +121,28 @@ export const palette = {
   stockLow:     colors.warning.main,    // poco stock
   stockOut:     colors.error.main,      // sin stock
   sky: colors.sky,
+
+  // Estados
+  success: {
+    light: colors.success.light,
+    main: colors.success.main,
+    dark: colors.success.dark,
+  },
+  error: {
+    light: colors.error.light,
+    main: colors.error.main,
+    dark: colors.error.dark,
+  },
+  warning: {
+    light: colors.warning.light,
+    main: colors.warning.main,
+    dark: colors.warning.dark,
+  },
+  info: {
+    light: colors.info.light,
+    main: colors.info.main,
+    dark: colors.info.dark,
+  },
 } as const;
 
 // ── Tipografía ──

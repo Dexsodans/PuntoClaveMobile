@@ -54,6 +54,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="compras"
+        options={{
+          title: "Compras",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={22} name="house.fill" color={color} />
+          ),
+        }}
+      />
 
       {/* <Tabs.Screen
         name="menu-demo"
@@ -98,6 +107,7 @@ export default function TabLayout() {
           href: null
         }}
       />
+      
 
       {/* <Tabs.Screen
         name="error-demo"

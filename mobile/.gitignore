@@ -45,3 +45,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# django
+.env
+backend/.env

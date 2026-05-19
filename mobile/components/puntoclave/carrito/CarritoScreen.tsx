@@ -8,6 +8,8 @@ import BASE_URL from "@/lib/api";
 import { styles } from "@/assets/styles/tabs/carritoStyles";
 import CarritoList from "@/components/puntoclave/carrito/CarritoList";
 import { useRouter } from "expo-router";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 
 
@@ -52,10 +54,11 @@ export default function CarritoScreen() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
+useFocusEffect(
+  useCallback(() => {
     fetchCarrito();
-  }, []);
+  }, [])
+);
 
   const total = items.reduce((acc, i) => acc + Number(i.SUB_TOTAL_CAR), 0);
 

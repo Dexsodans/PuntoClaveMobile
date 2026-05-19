@@ -118,6 +118,7 @@ export default function ConfirmarPedidoScreen() {
                     }),
                 });
             }
+            
 
             router.replace("/");
         } catch (error) {

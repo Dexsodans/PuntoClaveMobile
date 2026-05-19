@@ -6,7 +6,7 @@ from django.db import connection
 def get_all():
     return Producto.objects.all().values()
 
-def get_productos_inventario():
+def get_productos_inventario(id_prov=None):
 
     query = """
         SELECT 
@@ -24,9 +24,16 @@ def get_productos_inventario():
             ON p."id" = i."id_pro"
     """
 
+    params = []
+
+    if id_prov is not None:
+        query += ' WHERE p."id_prov" = %s'
+        params.append(id_prov)
+
     with connection.cursor() as cursor:
-        cursor.execute(query)
+        cursor.execute(query, params)
         columns = [col[0] for col in cursor.description]
+
         results = [
             dict(zip(columns, row))
             for row in cursor.fetchall()

@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from api.models.user_model import User
 
 class Cliente(models.Model):
 
@@ -18,16 +18,3 @@ class Cliente(models.Model):
     class Meta:
         db_table = "clientes"
     
-
-""" $table->id();
-            $table->string('COD_CLI', 15)->nullable();
-            $table->string('CI_CLI',20)->unique();
-            $table->date('FECHA_NAC_CLI')->nullable();
-            $table->string('TIPO_CLI', 25)->nullable();
-            /* $table->string('TIPO_PAGO_CLI', 50)->nullable(); */
-            $table->string('NIT_CLI',40)->nullable();
-            $table->boolean('EST_CLI')->default(true);
-            $table->unsignedBigInteger('id_usu');
-            $table->foreign('id_usu')->references('id')->on('users');
-
-            $table->timestamps(); """
