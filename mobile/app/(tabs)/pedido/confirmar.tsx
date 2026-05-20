@@ -84,7 +84,7 @@ export default function ConfirmarPedidoScreen() {
         if (!fechaSeleccionada || !horaSeleccionada) { console.log("Debes seleccionar fecha y hora"); return; }
 
         router.push({
-            pathname: "/(tabs)/Pago",
+            pathname: "/pago",
             params: {
                 total,
                 items: JSON.stringify(items),

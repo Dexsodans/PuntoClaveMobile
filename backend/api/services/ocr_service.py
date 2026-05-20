@@ -52,7 +52,7 @@ def obtener_productos_proveedor(id_prov: int):
     ).values(
         "id",
         "NOM_PRO",
-        "PRECIO_VENTA_PRO",  # usamos precio de venta, no de compra
+        "PRECIO_COMPRA_PRO",  # usamos precio de venta, no de compra
         "COD_PRO"
     )
     return list(productos)
@@ -142,7 +142,7 @@ def mapear_productos(texto_ocr, productos):
                     "id": mejor_producto["id"],
                     "NOM_PRO": mejor_producto["NOM_PRO"],
                     "cantidad": cantidad if cantidad > 0 else 1,
-                    "PRECIO_VENTA_PRO": float(mejor_producto["PRECIO_VENTA_PRO"] or 0),
+                    "PRECIO_COMPRA_PRO": float(mejor_producto["PRECIO_COMPRA_PRO"] or 0),
                     "score": round(mejor_score, 2),
                 })
                 ids_agregados.add(mejor_producto["id"])

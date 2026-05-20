@@ -30,8 +30,12 @@ export default function PedidosList({ onPedidoPress }: Props) {
                 }
             );
             
+            
             const data: any = await response.json();
-
+            console.log(
+   "PRIMER PEDIDO:",
+   JSON.stringify(data[0], null, 2)
+);
             setPedidos(data);
 
         } catch (error) {

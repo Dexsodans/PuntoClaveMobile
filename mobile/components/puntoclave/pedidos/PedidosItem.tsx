@@ -31,7 +31,11 @@ export default function PedidoItem({ pedido, index, onPress }: Props) {
                 </Text>
 
                 <Text style={styles.direccion}>
-                    {pedido.ubicacion?.direccion}
+                    {pedido.ubicacion?.DIRECCION_UBI || "Sin dirección"}
+                </Text>
+
+                <Text style={styles.estado}>
+                    Estado: {pedido.EST_PEDI}
                 </Text>
 
             </TouchableOpacity>
@@ -67,6 +71,12 @@ const styles = StyleSheet.create({
     },
 
     direccion: {
+        marginTop: 6,
+        fontSize: 13,
+        color: "#555",
+    },
+
+    estado: {
         marginTop: 6,
         fontSize: 13,
         color: "#555",

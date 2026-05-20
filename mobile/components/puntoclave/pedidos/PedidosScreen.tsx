@@ -1,24 +1,40 @@
 import { View, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useRouter } from "expo-router";
 import PedidosList from "./PedidosList";
-import PedidoMapaModal from "./PedidoMapaModal";
 import { palette } from "@/constants/Theme";
 
 export default function PedidosScreen() {
 
-    const [pedidoSeleccionado, setPedidoSeleccionado] = useState<any>(null);
+    const router = useRouter();
+
+    const handlePedidoPress = (pedido: any) => {
+        
+        router.push({
+            pathname: "/(tabs)/comprobante",
+            params: {
+                total: pedido.TOTAL_PEDI,
+                pedidoId: pedido.id,
+                items: JSON.stringify(
+                    pedido.productos.map((p: any) => ({
+                        NOMBRE_PRO: p.NOM_PRO,
+                        CANT_CAR: p.CANT_CAR,
+                        SUB_TOTAL_CAR: p.SUB_TOTAL_CAR,
+                    }))
+                ),
+                metodo: 'Pagado',
+            },
+            /*  router.replace({
+                    pathname: "/(tabs)/comprobante",
+                    params: { total, pedidoId: id_pedi, items: JSON.stringify(items), metodo },
+                }); */
+        });
+    };
 
     return (
         <View style={styles.container}>
 
             <PedidosList
-                onPedidoPress={(pedido) => setPedidoSeleccionado(pedido)}
-            />
-
-            <PedidoMapaModal
-                pedido={pedidoSeleccionado}
-                visible={!!pedidoSeleccionado}
-                onClose={() => setPedidoSeleccionado(null)}
+                onPedidoPress={handlePedidoPress}
             />
 
         </View>

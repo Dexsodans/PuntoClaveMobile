@@ -96,7 +96,7 @@ export default function OcrUploader({ onExito, onAtras }: Props) {
         if (productosOcr.length > 0) {
           setItemsDesdeOcr(
             productosOcr.map((p: any) => {
-              const precio = p.PRECIO_VENTA_PRO ?? 0;
+              const precio = p.PRECIO_COMPRA_PRO ?? 0;
               const cantidad = p.cantidad > 0 ? p.cantidad : 1;
               return {
                 id: p.id,

@@ -71,9 +71,9 @@ export function CompraProvider({ children }: any) {
         {
           id: producto.id,
           nombre: producto.NOM_PRO,
-          precio: producto.PRECIO_VENTA_PRO,
+          precio: producto.PRECIO_COMPRA_PRO,
           cantidad: 1,
-          subtotal: producto.PRECIO_VENTA_PRO,
+          subtotal: producto.PRECIO_COMPRA_PRO,
         },
       ];
     });
