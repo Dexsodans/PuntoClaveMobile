@@ -50,7 +50,7 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={22} name="house.fill" color={color} />
+            <Ionicons name="home-outline" size={22} color={color} />
           ),
         }}
       />
@@ -59,7 +59,7 @@ export default function TabLayout() {
         options={{
           title: "Compras",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={22} name="house.fill" color={color} />
+            <Ionicons name="cash-outline" size={22} color={color} />
           ),
         }}
       />
@@ -107,8 +107,30 @@ export default function TabLayout() {
           href: null
         }}
       />
-      
-
+      <Tabs.Screen
+        name="Pago"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="comprobante"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="pedido/confirmar"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="pedidos/Confirmar"
+        options={{
+          href: null
+        }}
+      />
       {/* <Tabs.Screen
         name="error-demo"
         options={{

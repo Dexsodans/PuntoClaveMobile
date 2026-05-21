@@ -17,6 +17,14 @@ class ProductoView(APIView):
             # obtener datos
             data = get_productos_inventario(id_prov)
 
+            # convertir imagen a URL completa
+            for producto in data:
+
+                if producto["IMAGEN_PRO"]:
+                    producto["IMAGEN_PRO"] = request.build_absolute_uri(
+                        "/media/" + producto["IMAGEN_PRO"]
+                    )
+
             # paginación manual
             start = (page - 1) * page_size
             end = start + page_size

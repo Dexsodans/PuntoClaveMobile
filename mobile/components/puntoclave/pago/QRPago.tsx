@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Image } from "react-native";
 
 interface Props {
     total: number;
@@ -24,7 +25,11 @@ export default function QRPago({ total }: Props) {
                     <View style={[styles.corner, styles.cornerBR]} />
                     {/* Contenido central */}
                     <View style={styles.qrCenter}>
-                        <Ionicons name="qr-code" size={80} color="#1E40AF" />
+                        <Image
+                            source={require("@/assets/images/qr.jpeg")}
+                            style={styles.qrImage}
+                            resizeMode="contain"
+                        />
                     </View>
                 </View>
             </View>
@@ -118,4 +123,8 @@ const styles = StyleSheet.create({
     },
     pasoBadgeText: { fontSize: 12, fontWeight: "700", color: "#1E40AF" },
     pasoText: { fontSize: 13, color: "#475569", flex: 1 },
+    qrImage: {
+    width: 120,
+    height: 120,
+},
 });
