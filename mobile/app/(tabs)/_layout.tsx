@@ -63,6 +63,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="entregas/entregas"
+        options={{
+          title: "Entregas",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="cash-outline" size={22} color={color} />
+          ),
+        }}
+      />
 
       {/* <Tabs.Screen
         name="menu-demo"
