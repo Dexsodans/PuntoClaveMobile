@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 import StepperPedido from "./StepperPedido";
 import LineaTiempoMoto from "./LineaTiempoMoto";
@@ -32,14 +32,36 @@ export default function ComprobanteScreen({
     items = [],
 }: Props) {
 
+    const params = useLocalSearchParams();
     const router = useRouter();
-    console.log("Renderizando ComprobanteScreen con:", { pedidoId, total, metodo, items });
 
     return (
         <ScrollView
             style={styles.container}
             contentContainerStyle={styles.content}
         >
+            <View style={styles.header}>
+            <TouchableOpacity
+                onPress={() => {
+                    if (params.origen) {
+                        router.push(params.origen as any);
+                    } else {
+                        router.back();
+                    }
+                }}
+                style={styles.backButton}
+            >
+                <Ionicons
+                    name="arrow-back"
+                    size={24}
+                    color="#1E3A5F"
+                />
+            </TouchableOpacity>
+
+            <Text style={styles.headerTitle}>
+                Comprobante
+            </Text>
+        </View>
             {/* STEP GENERAL */}
             <StepperPedido pasoActual={6} />
 
@@ -300,5 +322,21 @@ const styles = StyleSheet.create({
     secondaryBtnText: {
         color: "#1E40AF",
         fontWeight: "700",
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 10,
+    },
+
+    backButton: {
+        padding: 8,
+    },
+
+    headerTitle: {
+        fontSize: 20,
+        fontWeight: "700",
+        color: "#1E3A5F",
+        marginLeft: 10,
     },
 });

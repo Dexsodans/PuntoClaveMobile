@@ -3,13 +3,13 @@ import Animated, { FadeInRight } from "react-native-reanimated";
 import { palette } from "@/constants/Theme";
 
 interface Props {
-    entrega: any;
+    ruta: any;
     index: number;
     onPress: () => void;
 }
 
 
-export default function EntregasItem({ entrega, index, onPress }: Props) {
+export default function RutasItem({ ruta, index, onPress }: Props) {
 
     return (
         <Animated.View entering={FadeInRight.delay(index * 80)}>
@@ -19,22 +19,24 @@ export default function EntregasItem({ entrega, index, onPress }: Props) {
             >
 
                 <Text style={styles.codigo}>
-                    {entrega.COD_CAJA}
+                    {ruta.pedido?.COD_PEDI}
                 </Text>
 
                 <Text style={styles.total}>
-                    {entrega.nombre_ruta}
+                    Bs. {ruta.pedido?.TOTAL_PEDI}
                 </Text>
 
-                <Text style={styles.fecha}>
-                    {new Date(entrega.FECHA_CREACION_CAJA).toLocaleString()}
+                {/* <Text style={styles.fecha}>
+                    {new Date(entrega.FECHA_ENTREGA).toLocaleString()}
                 </Text>
 
+                <Text style={styles.direccion}>
+                    {entrega.ubicacion?.DIRECCION_UBI || "Sin dirección"}
+                </Text>
 
                 <Text style={styles.estado}>
-                    {/* Si es 1 esta cerrado, 2 en proceso y 3 pendiente */}
-                    Estado: {entrega.EST_CAJA === 1 ? "Cerrado" : entrega.EST_CAJA === 2 ? "En proceso" : "Pendiente"}
-                </Text>
+                    Estado: {entrega.EST_ENTREGA}
+                </Text> */}
 
             </TouchableOpacity>
         </Animated.View>
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
     estado: {
         marginTop: 6,
         fontSize: 13,
-        color: "#fd8f00",
+        color: "#555",
     },
 
 });

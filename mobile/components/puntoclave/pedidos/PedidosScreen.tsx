@@ -12,6 +12,7 @@ export default function PedidosScreen() {
         router.push({
             pathname: "/(tabs)/comprobante",
             params: {
+                origen: "/(tabs)/pedidos",
                 total: pedido.TOTAL_PEDI,
                 pedidoId: pedido.id,
                 items: JSON.stringify(

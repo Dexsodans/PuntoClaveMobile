@@ -25,7 +25,10 @@ def get_pedidos_ruta(id_ruta):
             id_ubi=ruta_ubi.id_ubi
         ).select_related(
             "id_cli",
+            "id_cli__id_usu",
             "id_ubi"
+        ).prefetch_related(
+            "detallepedido_set__id_pro"
         ).first()
 
         data.append({
@@ -46,6 +49,34 @@ def get_pedidos_ruta(id_ruta):
                 "TOTAL_PEDI": pedido.TOTAL_PEDI,
                 "FECHA_PEDI": pedido.FECHA_PEDI,
                 "EST_PEDI": pedido.EST_PEDI,
+
+                "cliente": {
+                    "id": pedido.id_cli.id,
+                    "COD_CLI": pedido.id_cli.COD_CLI,
+
+                    "usuario": {
+                        "id": pedido.id_cli.id_usu.id,
+                        "NOM_USU": pedido.id_cli.id_usu.name,
+                        "AP_PAT_USU": pedido.id_cli.id_usu.AP_PAT_USU,
+                        "AP_MAT_USU": pedido.id_cli.id_usu.AP_MAT_USU,
+                        "CEL_USU": pedido.id_cli.id_usu.CEL_USU,
+                        "email": pedido.id_cli.id_usu.email,
+                    }
+                },
+
+                "productos": [
+                    {
+                        "id_pro": detalle.id_pro.id,
+                        "COD_PRO": detalle.id_pro.COD_PRO,
+                        "NOM_PRO": detalle.id_pro.NOM_PRO,
+                        "IMAGEN_PRO": detalle.id_pro.IMAGEN_PRO,
+                        "PRECIO_VENTA_PRO": detalle.id_pro.PRECIO_VENTA_PRO,
+
+                        "cantidad": detalle.CANT_DET_PEDI,
+                        "subtotal": detalle.SUB_TOTAL_DET_PEDI,
+                    }
+                    for detalle in pedido.detallepedido_set.all()
+                ]
             } if pedido else None
         })
 

@@ -1,14 +1,15 @@
 import { FlatList, ActivityIndicator, View } from "react-native";
 import { useEffect, useState } from "react";
-import EntregasItem from "./EntregasItem";
+import RutasItem from "./RutasItem";
 import BASE_URL from "@/lib/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Props {
+    idRuta: string;
     onEntregaPress: (entrega: any) => void;
 }
 
-export default function EntregasList({ onEntregaPress }: Props) {
+export default function EntregasList({ onEntregaPress, idRuta }: Props) {
 
     const [entregas, setEntregas] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -20,9 +21,9 @@ export default function EntregasList({ onEntregaPress }: Props) {
             const token = await AsyncStorage.getItem("token");
             const userData = await AsyncStorage.getItem("user");
             const user = JSON.parse(userData || "{}");
-
+            console.log("Ruta ID en fetchEntregas:", idRuta);
             const response = await fetch(
-                `${BASE_URL}/api/cajas/?user_id=${user.id}`,
+                `${BASE_URL}/api/ruta_pedidos/?id_ruta=${idRuta}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -32,7 +33,8 @@ export default function EntregasList({ onEntregaPress }: Props) {
             
             
             const data: any = await response.json();
-            setEntregas(data);
+            console.log("Rutas recibidads en EntregasList:", data);
+            setEntregas(data.data);
 
         } catch (error) {
             console.log(error);
@@ -43,7 +45,7 @@ export default function EntregasList({ onEntregaPress }: Props) {
 
     useEffect(() => {
         fetchEntregas();
-    }, []);
+    }, [idRuta]);
 
     if (loading) {
         return (
@@ -54,10 +56,10 @@ export default function EntregasList({ onEntregaPress }: Props) {
     return (
         <FlatList
             data={entregas}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id_ruta_ubi.toString()}
             renderItem={({ item, index }) => (
-                <EntregasItem
-                    entrega={item}
+                <RutasItem
+                    ruta={item}
                     index={index}
                     onPress={() => onEntregaPress(item)}
                 />

@@ -2,43 +2,39 @@ import { View, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { palette } from "@/constants/Theme";
 import { Card,Text } from "@/components/ui";
+import EntregasList from "./EntregasList";
 
 export default function EntregasScreen() {
 
     const router = useRouter();
 
-    const handlePedidoPress = (pedido: any) => {
+    const handleEntregaPress = (entrega: any) => {
         
         router.push({
-            pathname: "/(tabs)/comprobante",
+            pathname: "/(tabs)/entregas/RutasUbicaciones",
             params: {
-                total: pedido.TOTAL_PEDI,
-                pedidoId: pedido.id,
+                /* total: entrega.TOTAL_CAJA,
+                entregaId: entrega.id,
                 items: JSON.stringify(
-                    pedido.productos.map((p: any) => ({
+                    entrega.productos.map((p: any) => ({
                         NOMBRE_PRO: p.NOM_PRO,
                         CANT_CAR: p.CANT_CAR,
                         SUB_TOTAL_CAR: p.SUB_TOTAL_CAR,
                     }))
                 ),
-                metodo: 'Pagado',
+                metodo: 'Pagado', */
+                Caja: entrega.COD_CAJA,
+                id_ruta: entrega.id_ruta,
             },
-            /*  router.replace({
-                    pathname: "/(tabs)/comprobante",
-                    params: { total, pedidoId: id_pedi, items: JSON.stringify(items), metodo },
-                }); */
         });
     };
 
     return (
         <View style={styles.container}>
 
-            {/* <PedidosList
-                onPedidoPress={handlePedidoPress}
-            /> */}
-            <Text>
-                Hola
-            </Text>
+            <EntregasList
+                onEntregaPress={handleEntregaPress}
+            />
 
         </View>
     );
