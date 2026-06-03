@@ -1,8 +1,9 @@
 import { View, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { palette } from "@/constants/Theme";
-import { Card,Text } from "@/components/ui";
+import { Card,Text, Button } from "@/components/ui";
 import EntregasList from "./EntregasList";
+
 
 export default function EntregasScreen() {
 
@@ -25,9 +26,11 @@ export default function EntregasScreen() {
                 metodo: 'Pagado', */
                 Caja: entrega.COD_CAJA,
                 id_ruta: entrega.id_ruta,
+                idcaja: entrega.id,
             },
         });
     };
+    
 
     return (
         <View style={styles.container}>
@@ -35,6 +38,7 @@ export default function EntregasScreen() {
             <EntregasList
                 onEntregaPress={handleEntregaPress}
             />
+
 
         </View>
     );

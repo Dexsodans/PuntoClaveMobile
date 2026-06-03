@@ -22,6 +22,7 @@ interface Props {
     pedidoId?: string;
     total: number;
     metodo?: string;
+    EST_PEDI?: number;
     items?: Item[];
 }
 
@@ -29,6 +30,7 @@ export default function ComprobanteScreen({
     pedidoId,
     total,
     metodo,
+    EST_PEDI,
     items = [],
 }: Props) {
 
@@ -66,7 +68,7 @@ export default function ComprobanteScreen({
             <StepperPedido pasoActual={6} />
 
             {/* ESTADO DELIVERY */}
-            <LineaTiempoMoto estado={1} />
+            <LineaTiempoMoto estado={EST_PEDI || 3} />
 
             {/* CARD COMPROBANTE */}
             <View style={styles.card}>

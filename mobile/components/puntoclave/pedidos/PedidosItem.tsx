@@ -35,7 +35,8 @@ export default function PedidoItem({ pedido, index, onPress }: Props) {
                 </Text>
 
                 <Text style={styles.estado}>
-                    Estado: {pedido.EST_PEDI}
+                    {/* 1 es pendiente, 2 es en proceso, 3 es completado */}
+                    Estado: {pedido.EST_PEDI == 1 ? "Pendiente" : pedido.EST_PEDI === 2 ? "En proceso" : "Completado"}
                 </Text>
 
             </TouchableOpacity>

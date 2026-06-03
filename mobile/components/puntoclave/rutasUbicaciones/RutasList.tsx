@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import RutasItem from "./RutasItem";
 import BASE_URL from "@/lib/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "expo-router";
+import { useCallback } from "react";
 
 interface Props {
     idRuta: string;
@@ -33,7 +35,6 @@ export default function EntregasList({ onEntregaPress, idRuta }: Props) {
             
             
             const data: any = await response.json();
-            console.log("Rutas recibidads en EntregasList:", data);
             setEntregas(data.data);
 
         } catch (error) {
@@ -43,9 +44,11 @@ export default function EntregasList({ onEntregaPress, idRuta }: Props) {
         }
     };
 
-    useEffect(() => {
-        fetchEntregas();
-    }, [idRuta]);
+    useFocusEffect(
+        useCallback(() => {
+            fetchEntregas();
+        }, [idRuta])
+    );
 
     if (loading) {
         return (

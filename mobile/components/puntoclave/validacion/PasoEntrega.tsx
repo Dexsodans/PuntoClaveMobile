@@ -20,13 +20,14 @@ export default function PasoEntrega({
 }: Props) {
     const router = useRouter();
     const handlePedidoPress = (pedido: any) => {
-        
+        console.log("Pedido seleccionado:", pedido.EST_PEDI);
         router.push({
             pathname: "/(tabs)/comprobante",
             params: {
                 origen: "/(tabs)/entregas/Validacion",
                 total: pedido.TOTAL_PEDI,
                 pedidoId: pedido.id,
+                estado: pedido.EST_PEDI,
                 items: JSON.stringify(
                     pedido.productos.map((p: any) => ({
                         NOMBRE_PRO: p.NOM_PRO,
@@ -36,13 +37,9 @@ export default function PasoEntrega({
                 ),
                 metodo: 'Pagado',
             },
-            /*  router.replace({
-                    pathname: "/(tabs)/comprobante",
-                    params: { total, pedidoId: id_pedi, items: JSON.stringify(items), metodo },
-                }); */
+
         });
     };
-
     const lat = Number(params.Latitud);
     const lng = Number(params.Longitud);
 
@@ -70,6 +67,7 @@ export default function PasoEntrega({
                 onPress={() => handlePedidoPress({
                     id: params.pedidoId,
                     TOTAL_PEDI: params.total,
+                    EST_PEDI: params.EST_PEDI,
                     productos: JSON.parse(params.items),
                 })}
             >

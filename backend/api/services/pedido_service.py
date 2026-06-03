@@ -166,3 +166,21 @@ def get_for_cliente(id_usu):
         })
 
     return data
+
+##cambiar estado a 3
+
+def entregar_pedido(id_pedi):
+    try:
+        pedido = Pedido.objects.get(id=id_pedi)
+        pedido.EST_PEDI = 3  # Estado "entregado"
+        pedido.save()
+        return pedido
+    except Pedido.DoesNotExist:
+        return None
+    
+def codigo_por_pedido(id_pedi):
+    try:
+        pedido = Pedido.objects.get(id=id_pedi)
+        return pedido.COD_PEDI
+    except Pedido.DoesNotExist:
+        return None

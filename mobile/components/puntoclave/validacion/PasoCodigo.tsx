@@ -3,10 +3,70 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    StyleSheet
+    StyleSheet,
+    Alert
 } from "react-native";
+import { useState } from "react";
+import BASE_URL from "@/lib/api";
+import { useRouter } from "expo-router";
 
-export default function PasoCodigo() {
+
+interface Props {
+    pedidoId: string;
+}
+export default function PasoCodigo({ pedidoId }: Props) {
+
+    const [codigo, setCodigo] = useState("");
+
+    const router = useRouter();
+    const handleValidar = async () => {
+
+        
+        const response = await fetch(`${BASE_URL}/api/pedidos/`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                /* Authorization: `Bearer ${token}`, */
+            },
+            body: JSON.stringify({
+                id_pedi: pedidoId,
+                COD_VALIDACION: codigo,
+            }),
+        });
+
+        const data: any = await response.json();
+
+        if (data.success) {
+            Alert.alert(
+                "Éxito",
+                "Validación exitosa"
+            );
+            router.back();
+        } else {
+            Alert.alert(
+                "Error",
+                "Validación fallida"
+            );
+        }
+    };
+    const alerta = () => {
+
+                // Ejemplo de fetch
+        Alert.alert(
+            "Confirmar entrega",
+            "¿Deseas entregar este pedido?",
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel",
+                },
+                {
+                    text: "Aceptar",
+                    onPress: () => handleValidar(),
+                },
+            ]
+        );
+    };
 
     return (
         <View style={styles.container}>
@@ -18,10 +78,13 @@ export default function PasoCodigo() {
             <TextInput
                 placeholder="Código de validación"
                 style={styles.input}
+                value={codigo}
+                onChangeText={setCodigo}
             />
 
             <TouchableOpacity
                 style={styles.boton}
+                onPress={alerta}
             >
                 <Text style={styles.texto}>
                     Validar
@@ -31,6 +94,7 @@ export default function PasoCodigo() {
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
 

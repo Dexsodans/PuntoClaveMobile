@@ -29,6 +29,20 @@ class CajaView(APIView):
             })
         return Response(data)
 
+    #cambio de estado a 2
+
+    def post(self, request):
+        id_caja = request.data.get("id_caja")
+        caja = estado_2(id_caja)
+        
+        data = {
+            "id": caja.id,
+            "COD_CAJA": caja.COD_CAJA,
+            "EST_CAJA": caja.EST_CAJA,
+            "EVIDENCIA_CAJA": caja.EVIDENCIA_CAJA,
+            "FECHA_CREACION_CAJA": caja.FECHA_CREACION_CAJA
+        }
+        return Response(data)
         
         
 

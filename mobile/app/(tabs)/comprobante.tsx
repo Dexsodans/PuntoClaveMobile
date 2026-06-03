@@ -19,6 +19,7 @@ export default function ComprobantePage() {
             <ComprobanteScreen
                 pedidoId={params.pedidoId as string}
                 metodo={params.metodo as string}
+                EST_PEDI={Number(params.estado) || 1}
                 total={total}
                 items={items}
             />

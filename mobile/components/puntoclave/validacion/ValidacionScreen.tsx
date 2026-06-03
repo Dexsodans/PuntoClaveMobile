@@ -21,6 +21,6 @@ export default function ValidacionScreen({ params }: Props) {
     }
 
     return (
-        <PasoCodigo />
+        <PasoCodigo pedidoId={params.pedidoId}/>
     );
 }

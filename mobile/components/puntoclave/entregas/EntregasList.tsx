@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import EntregasItem from "./EntregasItem";
 import BASE_URL from "@/lib/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 interface Props {
     onEntregaPress: (entrega: any) => void;
@@ -41,9 +43,11 @@ export default function EntregasList({ onEntregaPress }: Props) {
         }
     };
 
-    useEffect(() => {
-        fetchEntregas();
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            fetchEntregas();
+        }, [])
+    );
 
     if (loading) {
         return (

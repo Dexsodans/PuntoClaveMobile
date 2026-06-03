@@ -1,4 +1,6 @@
 from api.models.caja_model import Caja
+from api.queries.pedidos_queries import get_id_for_caja
+from api.models.pedido_model import Pedido
 
 from rest_framework.response import Response
 import datetime
@@ -11,6 +13,27 @@ def get_for_ruteador(id_usu):
     caja = Caja.objects.filter(
         id_usu=id_usu
     )
+    return caja
+
+#cambiar estado a 2
+
+def estado_2(id_caja):
+
+    # Actualizar caja
+    caja = Caja.objects.get(id=id_caja)
+    caja.EST_CAJA = 2
+    caja.save()
+
+    # Obtener ids de pedidos relacionados
+    pedidos_ids = get_id_for_caja(id_caja)
+
+    # Actualizar todos los pedidos a estado 2
+    Pedido.objects.filter(
+        id__in=pedidos_ids
+    ).update(
+        EST_PEDI=2
+    )
+
     return caja
 
 

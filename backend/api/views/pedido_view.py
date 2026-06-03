@@ -1,4 +1,3 @@
-# api/views/proveedor_view.py
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -46,6 +45,30 @@ class PedidoView(APIView):
                     "FECHA_PEDI": pedido.FECHA_PEDI,
                 }
             })
-        
+    def patch(self, request):
+        """ user = get_user_from_token(request)
+        if not user:
+            return Response({"error": "No autorizado"}, status=401) """
+
+        id_pedi = request.data.get("id_pedi")
+
+        codigoBD = codigo_por_pedido(id_pedi)
+
+        if(codigoBD == request.data.get("COD_VALIDACION")):
+            pedido = entregar_pedido(id_pedi)
+            return Response({
+            "success": True,
+            "message": "Pedido entregado correctamente",
+            "pedido": {
+                "id": pedido.id,
+                "COD_PEDI": pedido.COD_PEDI,
+                "EST_PEDI": pedido.EST_PEDI,
+            }
+        })
+        else:
+            return Response({
+                "success": False,
+                "message": "Código incorrecto"
+            }, status=400)
         
 

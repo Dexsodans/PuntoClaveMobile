@@ -38,5 +38,6 @@ urlpatterns = [
     path("ocr/", OcrFacturaView.as_view()),
     path("cajas/", CajaView.as_view()),
     path("ruta_pedidos/", RutaPedidosView.as_view()),
+    path("cajas/estado2/", CajaView.as_view()), # nueva ruta para cambiar estado a 2
 ]
 

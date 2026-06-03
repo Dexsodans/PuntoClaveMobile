@@ -25,6 +25,9 @@ export default function RutasItem({ ruta, index, onPress }: Props) {
                 <Text style={styles.total}>
                     Bs. {ruta.pedido?.TOTAL_PEDI}
                 </Text>
+                <Text style={styles.estado}>
+                    Estado: {ruta.pedido?.EST_PEDI}
+                </Text>
 
                 {/* <Text style={styles.fecha}>
                     {new Date(entrega.FECHA_ENTREGA).toLocaleString()}

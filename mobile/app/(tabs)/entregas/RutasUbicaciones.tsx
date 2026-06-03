@@ -16,6 +16,7 @@ export default function Page() {
         />
         <RutasUbicacionesScreen
             idRuta={params.id_ruta as string}
+            idCaja={params.idcaja as string}
         />
 
         </View>

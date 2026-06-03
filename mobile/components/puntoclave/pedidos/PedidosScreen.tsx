@@ -14,6 +14,7 @@ export default function PedidosScreen() {
             params: {
                 origen: "/(tabs)/pedidos",
                 total: pedido.TOTAL_PEDI,
+                estado: pedido.EST_PEDI,
                 pedidoId: pedido.id,
                 items: JSON.stringify(
                     pedido.productos.map((p: any) => ({
