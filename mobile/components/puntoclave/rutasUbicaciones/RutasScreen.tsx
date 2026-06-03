@@ -26,6 +26,7 @@ export default function RutasUbicacionesScreen({ idRuta, idCaja }: Props) {
                             entrega.pedido?.cliente?.usuario?.AP_PAT_USU,
                             entrega.pedido?.cliente?.usuario?.AP_MAT_USU,
                             entrega.pedido?.cliente?.usuario?.email].join(" "),
+                id_cli: entrega.pedido?.cliente?.id,
                 Fecha: entrega.pedido?.FECHA_PEDI,
                 Caja: entrega.COD_CAJA,
                 total: entrega.pedido?.TOTAL_PEDI,

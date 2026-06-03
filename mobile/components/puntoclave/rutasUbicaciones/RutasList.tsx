@@ -23,7 +23,6 @@ export default function EntregasList({ onEntregaPress, idRuta }: Props) {
             const token = await AsyncStorage.getItem("token");
             const userData = await AsyncStorage.getItem("user");
             const user = JSON.parse(userData || "{}");
-            console.log("Ruta ID en fetchEntregas:", idRuta);
             const response = await fetch(
                 `${BASE_URL}/api/ruta_pedidos/?id_ruta=${idRuta}`,
                 {

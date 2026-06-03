@@ -29,18 +29,6 @@ export default function RutasItem({ ruta, index, onPress }: Props) {
                     Estado: {ruta.pedido?.EST_PEDI}
                 </Text>
 
-                {/* <Text style={styles.fecha}>
-                    {new Date(entrega.FECHA_ENTREGA).toLocaleString()}
-                </Text>
-
-                <Text style={styles.direccion}>
-                    {entrega.ubicacion?.DIRECCION_UBI || "Sin dirección"}
-                </Text>
-
-                <Text style={styles.estado}>
-                    Estado: {entrega.EST_ENTREGA}
-                </Text> */}
-
             </TouchableOpacity>
         </Animated.View>
     );

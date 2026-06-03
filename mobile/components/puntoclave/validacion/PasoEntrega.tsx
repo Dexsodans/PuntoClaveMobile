@@ -3,11 +3,13 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+    Modal
 } from "react-native";
 import { useRouter } from "expo-router";
-
+import AnalisisCliente from "./AnalisisCliente";
 import MapView, { Marker } from "react-native-maps";
+import { useState } from "react";
 
 interface Props {
     params: any;
@@ -18,9 +20,9 @@ export default function PasoEntrega({
     params,
     onEntregar
 }: Props) {
+    const [modalVisible, setModalVisible] = useState(false);
     const router = useRouter();
     const handlePedidoPress = (pedido: any) => {
-        console.log("Pedido seleccionado:", pedido.EST_PEDI);
         router.push({
             pathname: "/(tabs)/comprobante",
             params: {
@@ -95,6 +97,14 @@ export default function PasoEntrega({
 
                 <Text>Bs. {params.total}</Text>
             </View>
+            <TouchableOpacity
+                style={styles.entregar}
+                onPress={() => setModalVisible(true)}
+            >
+                <Text style={styles.btnText}>
+                    Análisis Cliente
+                </Text>
+            </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.entregar}
@@ -104,7 +114,16 @@ export default function PasoEntrega({
                     Entregar
                 </Text>
             </TouchableOpacity>
-
+        <Modal
+            visible={modalVisible}
+            animationType="slide"
+            presentationStyle="pageSheet"
+        >
+            <AnalisisCliente
+                id_cli={params.id_cli}
+                onClose={() => setModalVisible(false)}
+            />
+        </Modal>
         </ScrollView>
     );
 }
