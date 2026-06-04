@@ -1,4 +1,5 @@
 from api.models.pedido_model import Pedido
+from api.models.cliente_model import Cliente
 from api.models.detalle_pedido_model import DetallePedido
 from api.models.ubicacion_model import Ubicacion
 from api.queries.pedidos_queries import *
@@ -172,9 +173,17 @@ def get_for_cliente(id_usu):
 def entregar_pedido(id_pedi):
     try:
         pedido = Pedido.objects.get(id=id_pedi)
-        pedido.EST_PEDI = 3  # Estado "entregado"
+
+        pedido.EST_PEDI = 3
         pedido.save()
+
+        cliente = pedido.id_cli
+
+        cliente.puntos_cli += 10
+        cliente.save()
+
         return pedido
+
     except Pedido.DoesNotExist:
         return None
     

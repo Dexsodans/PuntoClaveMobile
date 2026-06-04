@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { palette } from "@/constants/Theme";
 import { Card,Text, Button } from "@/components/ui";
@@ -8,9 +8,10 @@ import BASE_URL from "@/lib/api";
     interface Props {
         idRuta: string;
         idCaja: string;
+        estadoCaja: string;
     }
 
-export default function RutasUbicacionesScreen({ idRuta, idCaja }: Props) {
+export default function RutasUbicacionesScreen({ idRuta, idCaja, estadoCaja }: Props) {
 
     const router = useRouter();
 
@@ -45,8 +46,6 @@ export default function RutasUbicacionesScreen({ idRuta, idCaja }: Props) {
     };
     const handleIniciarCaja = async () => {
         try {
-
-
             const response = await fetch(
                 `${BASE_URL}/api/cajas/estado2/`,
                 {
@@ -60,23 +59,55 @@ export default function RutasUbicacionesScreen({ idRuta, idCaja }: Props) {
                 }
             );
 
-            const data:any = await response.json();
+            const data: any = await response.json();
 
             if (!response.ok) {
                 throw new Error(data.error || "Error al iniciar caja");
-            }else{
-                console.log("Caja iniciada con éxito:", data);
             }
 
-            
-
-            // Aquí puedes recargar la lista o mostrar un mensaje
-            // fetchEntregas();
+            console.log("Caja iniciada con éxito:", data);
 
         } catch (error) {
             console.error("Error:", error);
         }
     };
+
+    const handleCerrarCaja = () => {
+        console.log("Presionó Cerrar Caja");
+    };
+
+    const handleObservarCaja = () => {
+        console.log("Presionó Observar Caja");
+    };
+        const confirmar = () => {
+            Alert.alert("Iniciar Caja", "¿Deseas iniciar la jornada de esta caja?", [
+                { text: "Cancelar", style: "cancel" },
+                { text: "Aceptar", onPress: handleIniciarCaja },
+            ]);
+        };
+
+    const estado = Number(estadoCaja);
+
+    const textoBoton =
+        estado === 1
+            ? "Observar Caja"
+            : estado === 2
+            ? "Cerrar Caja"
+            : "Iniciar Caja";
+
+    const colorBoton =
+        estado === 1
+            ? "#16a34a" // verde
+            : estado === 2
+            ? "#dc2626" // rojo
+            : "#2563eb"; // azul
+
+    const accionBoton =
+        estado === 1
+            ? handleObservarCaja
+            : estado === 2
+            ? handleCerrarCaja
+            : confirmar;
 
     return (
         <View style={styles.container}>
@@ -86,10 +117,10 @@ export default function RutasUbicacionesScreen({ idRuta, idCaja }: Props) {
             />
                         {/* Hazlo un boton jsjsjs */}
             <Button
-                onPress={handleIniciarCaja}
+                onPress={accionBoton}
                 style={{
                     margin: 16,
-                    backgroundColor: palette.accent,
+                    backgroundColor: colorBoton,
                     borderRadius: 12,
                 }}
             >
@@ -98,7 +129,7 @@ export default function RutasUbicacionesScreen({ idRuta, idCaja }: Props) {
                         color: palette.bgPrimary,
                     }}
                 >
-                    Iniciar Caja
+                    {textoBoton}
                 </Text>
             </Button>
         </View>

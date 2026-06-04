@@ -14,6 +14,7 @@ class Cliente(models.Model):
     on_delete=models.CASCADE,
     db_column="id_usu"
 )
+    puntos_cli = models.IntegerField(default=0)
 
     class Meta:
         db_table = "clientes"

@@ -14,19 +14,10 @@ export default function EntregasScreen() {
         router.push({
             pathname: "/(tabs)/entregas/RutasUbicaciones",
             params: {
-                /* total: entrega.TOTAL_CAJA,
-                entregaId: entrega.id,
-                items: JSON.stringify(
-                    entrega.productos.map((p: any) => ({
-                        NOMBRE_PRO: p.NOM_PRO,
-                        CANT_CAR: p.CANT_CAR,
-                        SUB_TOTAL_CAR: p.SUB_TOTAL_CAR,
-                    }))
-                ),
-                metodo: 'Pagado', */
                 Caja: entrega.COD_CAJA,
                 id_ruta: entrega.id_ruta,
                 idcaja: entrega.id,
+                est_caja: entrega.EST_CAJA,
             },
         });
     };

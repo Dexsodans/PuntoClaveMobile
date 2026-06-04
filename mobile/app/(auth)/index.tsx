@@ -26,7 +26,6 @@ const handleLogin = async (email: string, password: string) => {
     const data:any = await response.json();
 
     if (response.ok) {
-      console.log(data.message , "holaxd");
 
       // guardar token
       await AsyncStorage.setItem("token", data.token);

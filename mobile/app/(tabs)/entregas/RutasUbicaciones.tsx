@@ -11,12 +11,13 @@ export default function Page() {
     return (
         <View style={{ flex: 1, paddingTop: insets.top }}>
         <AppHeader
-            titulo = {params.id_ruta as string} 
+            titulo = "Pedidos"
             subtitulo= {params.Caja as string}
         />
         <RutasUbicacionesScreen
             idRuta={params.id_ruta as string}
             idCaja={params.idcaja as string}
+            estadoCaja={params.est_caja as string}
         />
 
         </View>

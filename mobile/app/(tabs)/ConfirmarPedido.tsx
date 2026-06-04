@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, TextInput } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -9,13 +9,27 @@ import { Ionicons } from "@expo/vector-icons";
 import BASE_URL from "@/lib/api";
 
 export default function ConfirmarPedidoScreen() {
-
+    const [user, setUser] = useState<any>(null);
     const router = useRouter();
     const params = useLocalSearchParams();
 
     const items = params.items ? JSON.parse(params.items as string) : [];
     const total = Number(params.total);
 
+    useEffect(() => {
+    const loadUser = async () => {
+        const data = await AsyncStorage.getItem("user");
+
+        if (data) {
+        const parsedUser = JSON.parse(data);
+        setUser(parsedUser);
+        }
+    };
+
+    loadUser();
+    }, []);
+    const puntos = user?.puntos || 0;
+    const valor = puntos*0.1;
     const [marker, setMarker] = useState<any>(null);
     const [direccion, setDireccion] = useState<string>("");
     const [fecha, setFecha] = useState<Date>(new Date());
@@ -204,10 +218,22 @@ export default function ConfirmarPedidoScreen() {
                             <Text style={styles.itemPrice}>Bs. {Number(item.SUB_TOTAL_CAR).toFixed(2)}</Text>
                         </View>
                     ))}
+                    
+                    <View style={styles.divider} />
+                    <View style={styles.itemRow}>
+                        <Text style={styles.totalLabel}>SubTotal</Text>
+                        <Text style={styles.totalPrice}>Bs. {total.toFixed(2)}</Text>
+                    </View>
+                    <View style={styles.itemRow}>
+                        <Text style={styles.itemName} numberOfLines={1}>
+                            Descuento por ({puntos} puntos)
+                        </Text>
+                        <Text style={styles.itemPrice}>Bs. {Number(valor).toFixed(2)}</Text>
+                    </View>
                     <View style={styles.divider} />
                     <View style={styles.itemRow}>
                         <Text style={styles.totalLabel}>Total</Text>
-                        <Text style={styles.totalPrice}>Bs. {total.toFixed(2)}</Text>
+                        <Text style={styles.totalPrice}>Bs. {total - valor}</Text>
                     </View>
                 </View>
 

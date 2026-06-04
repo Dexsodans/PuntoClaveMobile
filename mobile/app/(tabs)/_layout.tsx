@@ -63,15 +63,15 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="entregas/entregas"
         options={{
           title: "Entregas",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="cash-outline" size={22} color={color} />
+            <Ionicons name="cube-outline" size={22} color={color} />
           ),
         }}
-      />
+      /> */}
 
       {/* <Tabs.Screen
         name="menu-demo"
@@ -136,6 +136,30 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="pedidos/Confirmar"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="entregas/entregas"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="entregas/AnalisisCliente"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="entregas/Validacion"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="entregas/RutasUbicaciones"
         options={{
           href: null
         }}

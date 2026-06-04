@@ -1,193 +1,192 @@
-import {
-    View,
-    Text,
-    StyleSheet,
-    ActivityIndicator,
-    TouchableOpacity,
-    ScrollView,
-} from "react-native";
-
-import { Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { useFocusEffect } from "expo-router";
-import { useCallback } from "react";
+import { palette, typography, radius, shadows, spacing } from "@/constants/Theme";
 
 interface Analisis {
-    cliente_id: number;
-    nombre: string;
-    riesgo: string;
-    probabilidad: number;
-    tenure_meses: number;
-    gasto_mensual_promedio: number;
-    gasto_total: number;
-    ultima_compra: string;
-    dias_sin_comprar: number;
-    recomendacion: string;
+  cliente_id: number; nombre: string; riesgo: string;
+  probabilidad: number; tenure_meses: number;
+  gasto_mensual_promedio: number; gasto_total: number;
+  ultima_compra: string; dias_sin_comprar: number; recomendacion: string;
 }
-interface Props {
-    id_cli: string;
-    onClose: () => void;
-}
+interface Props { id_cli: string; onClose: () => void; }
 
+const riesgoConfig: Record<string, { label: string; bg: string; color: string }> = {
+  alto:  { label: "Riesgo alto",   bg: palette.error.light,   color: palette.error.dark   },
+  medio: { label: "Riesgo medio",  bg: palette.warning.light, color: palette.warning.dark },
+  bajo:  { label: "Riesgo bajo",   bg: palette.success.light, color: palette.success.dark },
+};
 
-export default function AnalisisCliente({
-    id_cli,
-    onClose,
-}: Props) {
-    
-    const router = useRouter();
+export default function AnalisisCliente({ id_cli, onClose }: Props) {
+  const [loading, setLoading] = useState(true);
+  const [analisis, setAnalisis] = useState<Analisis | null>(null);
 
-    const [loading, setLoading] = useState(true);
-    const [analisis, setAnalisis] = useState<Analisis | null>(null);
+  useEffect(() => {
+    if (!id_cli) return;
+    (async () => {
+      try {
+        setLoading(true);
+        const res = await fetch("http://192.168.31.195:8001/predecir-churn", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cliente_id: Number(id_cli) }),
+        });
+        const data: any = await res.json();
 
-    
-    const cargarAnalisis = async () => {
-        try {
-            setLoading(true);
+        setAnalisis(data);
+      } catch (e) { console.error(e); }
+      finally { setLoading(false); }
+    })();
+  }, [id_cli]);
 
-            const response = await fetch(
-                "http://192.168.31.195:8001/predecir-churn",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        cliente_id: Number(id_cli),
-                    }),
-                }
-            );
+  const est = riesgoConfig[analisis?.riesgo?.toLowerCase() ?? ""] ?? riesgoConfig.medio;
+  const prob = Math.round((analisis?.probabilidad ?? 0) * 100);
 
-            const data:any = await response.json();
+  return (
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      {/* Topbar */}
+      <View style={styles.topbar}>
+        <TouchableOpacity style={styles.backBtn} onPress={onClose}>
+          <Feather name="arrow-left" size={20} color={palette.textPrimary} />
+        </TouchableOpacity>
+        <Text style={styles.pageTitle}>Análisis de cliente</Text>
+        <View style={styles.aiBadge}>
+          <Feather name="zap" size={11} color={palette.info.dark} />
+          <Text style={styles.aiBadgeText}>IA</Text>
+        </View>
+      </View>
 
-            console.log("Respuesta IA:", data);
-
-            setAnalisis(data);
-
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setLoading(false);
-        }
-    };
-    
-    useEffect(() => {
-        if (id_cli) {
-            cargarAnalisis();
-        }
-    }, [id_cli]);
-    return (
-        <ScrollView contentContainerStyle={styles.container}>
-
-            <TouchableOpacity
-                style={styles.back}
-                onPress={onClose}
-            >
-                <Ionicons
-                    name="arrow-back"
-                    size={24}
-                    color="#000"
-                />
-                <Text>Volver</Text>
-            </TouchableOpacity>
-
-            <Text style={styles.titulo}>
-                Análisis de Cliente
-            </Text>
-
-            <View style={styles.card}>
-                <Text style={styles.nombre}>
-                    {analisis?.nombre}
-                </Text>
-
-                <Text>
-                    Riesgo: {analisis?.riesgo.toUpperCase()}
-                </Text>
-
-                <Text>
-                    Probabilidad: {(analisis?.probabilidad ?? 0) * 100}%
-                </Text>
-
-                <Text>
-                    Antigüedad: {analisis?.tenure_meses} meses
-                </Text>
-
-                <Text>
-                    Gasto mensual:
-                    Bs. {analisis?.gasto_mensual_promedio}
-                </Text>
-
-                <Text>
-                    Gasto total:
-                    Bs. {analisis?.gasto_total}
-                </Text>
-
-                <Text>
-                    Última compra:
-                    {" "}
-                    {analisis?.ultima_compra}
-                </Text>
-
-                <Text>
-                    Días sin comprar:
-                    {" "}
-                    {analisis?.dias_sin_comprar}
-                </Text>
+      {loading ? (
+        <ActivityIndicator style={{ marginTop: 60 }} color={palette.actionPrimary} size="large" />
+      ) : (
+        <>
+          {/* Hero */}
+          <View style={styles.hero}>
+            <View style={styles.avatar}>
+              <Feather name="user" size={26} color={palette.sky[700]} />
             </View>
-
-            <View style={styles.recomendacion}>
-                <Text style={styles.recTitulo}>
-                    Recomendación
-                </Text>
-
-                <Text>
-                    {analisis?.recomendacion}
-                </Text>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.heroName}>{analisis?.nombre}</Text>
+              <Text style={styles.heroSub}>Cliente desde hace {analisis?.tenure_meses} meses</Text>
             </View>
-            
-        </ScrollView>
-        
-    );
+            <View style={[styles.riesgoBadge, { backgroundColor: est.bg }]}>
+              <Text style={[styles.riesgoText, { color: est.color }]}>{est.label}</Text>
+            </View>
+          </View>
+
+          {/* Probabilidad */}
+          <View style={styles.card}>
+            <View style={styles.probHeader}>
+              <Text style={styles.cardLabel}>Probabilidad de churn</Text>
+              <Text style={styles.probNum}>{prob}%</Text>
+            </View>
+            <View style={styles.barTrack}>
+              <View style={[styles.barFill, { width: `${prob}%` }]} />
+            </View>
+            <View style={styles.barTicks}>
+              {["Bajo", "Medio", "Alto"].map(t => (
+                <Text key={t} style={styles.barTick}>{t}</Text>
+              ))}
+            </View>
+          </View>
+
+          {/* Stats grid */}
+          <Text style={styles.sectionTitle}>Métricas</Text>
+          <View style={styles.grid}>
+            {[
+              { icon: "clock",        label: "Sin comprar",    value: `${analisis?.dias_sin_comprar} días`, warn: (analisis?.dias_sin_comprar ?? 0) > 20 },
+              { icon: "trending-up",  label: "Gasto mensual",  value: `Bs. ${analisis?.gasto_mensual_promedio}`, sky: true },
+              { icon: "dollar-sign",  label: "Gasto total",    value: `Bs. ${analisis?.gasto_total}`, sky: true },
+              { icon: "calendar",     label: "Última compra",  value: analisis?.ultima_compra ?? "—" },
+            ].map(({ icon, label, value, warn, sky }) => (
+              <View key={label} style={styles.stat}>
+                <View style={styles.statLabel}>
+                  <Feather name={icon as any} size={13} color={palette.textSecondary} />
+                  <Text style={styles.statLabelText}>{label}</Text>
+                </View>
+                <Text style={[styles.statValue, warn && { color: palette.warning.light }, sky && { color: palette.actionPrimary }]}>
+                  {value}
+                </Text>
+              </View>
+            ))}
+          </View>
+
+          {/* Recomendación */}
+          <View style={styles.rec}>
+            <View style={styles.recIcon}>
+              <Feather name="zap" size={18} color={palette.info.dark} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.recTitle}>Recomendación IA</Text>
+              <Text style={styles.recText}>{analisis?.recomendacion}</Text>
+            </View>
+          </View>
+        </>
+      )}
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-        gap: 16,
-    },
+  container: { flex: 1, backgroundColor: palette.bgSecondary },
+  content: { padding: spacing.base, gap: spacing.md, paddingBottom: spacing["3xl"] },
 
-    back: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 8,
-    },
+  topbar: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
+  backBtn: {
+    width: 36, height: 36, borderRadius: radius.full,
+    backgroundColor: palette.bgPrimary, borderWidth: 0.5, borderColor: palette.borderMedium,
+    alignItems: "center", justifyContent: "center",
+  },
+  pageTitle: { flex: 1, fontSize: typography.size.base + 1, fontWeight: typography.weight.medium, color: palette.textPrimary },
+  aiBadge: {
+    flexDirection: "row", alignItems: "center", gap: 4,
+    backgroundColor: palette.info.light, borderWidth: 0.5, borderColor: palette.sky[200],
+    borderRadius: radius.full, paddingHorizontal: 10, paddingVertical: 3,
+  },
+  aiBadgeText: { fontSize: typography.size.xs, fontWeight: typography.weight.medium, color: palette.info.dark },
 
-    titulo: {
-        fontSize: 24,
-        fontWeight: "700",
-    },
+  hero: {
+    backgroundColor: palette.bgPrimary, borderRadius: radius.lg,
+    padding: spacing.base, flexDirection: "row", alignItems: "center", gap: spacing.md,
+    ...shadows.sm,
+  },
+  avatar: {
+    width: 52, height: 52, borderRadius: radius.full,
+    backgroundColor: palette.sky[100], alignItems: "center", justifyContent: "center",
+  },
+  heroName: { fontSize: typography.size.base, fontWeight: typography.weight.medium, color: palette.textPrimary },
+  heroSub: { fontSize: typography.size.xs + 1, color: palette.textSecondary, marginTop: 2 },
+  riesgoBadge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.full },
+  riesgoText: { fontSize: typography.size.xs, fontWeight: typography.weight.medium },
 
-    card: {
-        backgroundColor: "#fff",
-        padding: 16,
-        borderRadius: 12,
-        gap: 10,
-    },
+  card: { backgroundColor: palette.bgPrimary, borderRadius: radius.lg, padding: spacing.base, ...shadows.sm },
+  cardLabel: { fontSize: typography.size.sm, color: palette.textSecondary },
+  probHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: spacing.sm },
+  probNum: { fontSize: typography.size.xl, fontWeight: typography.weight.medium, color: palette.textPrimary },
+  barTrack: { height: 10, backgroundColor: palette.bgTertiary, borderRadius: radius.full, overflow: "hidden" },
+  barFill: { height: "100%", borderRadius: radius.full, backgroundColor: palette.warning.light },
+  barTicks: { flexDirection: "row", justifyContent: "space-between", marginTop: 4 },
+  barTick: { fontSize: typography.size.xs, color: palette.textMuted },
 
-    nombre: {
-        fontSize: 18,
-        fontWeight: "700",
-    },
+  sectionTitle: { fontSize: typography.size.xs + 1, fontWeight: typography.weight.semibold, color: palette.textSecondary, textTransform: "uppercase", letterSpacing: 0.8 },
 
-    recomendacion: {
-        backgroundColor: "#f8fafc",
-        padding: 16,
-        borderRadius: 12,
-    },
+  grid: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm },
+  stat: {
+    flex: 1, minWidth: "45%", backgroundColor: palette.bgPrimary,
+    borderRadius: radius.md, padding: spacing.md, ...shadows.sm,
+  },
+  statLabel: { flexDirection: "row", alignItems: "center", gap: 4 },
+  statLabelText: { fontSize: typography.size.xs + 1, color: palette.textSecondary },
+  statValue: { fontSize: typography.size.lg, fontWeight: typography.weight.medium, color: palette.textPrimary, marginTop: 6 },
 
-    recTitulo: {
-        fontWeight: "700",
-        marginBottom: 10,
-    },
+  rec: {
+    backgroundColor: palette.info.light, borderWidth: 0.5, borderColor: palette.sky[200],
+    borderRadius: radius.lg, padding: spacing.base, flexDirection: "row", gap: spacing.md,
+  },
+  recIcon: {
+    width: 36, height: 36, borderRadius: radius.full,
+    backgroundColor: palette.sky[100], alignItems: "center", justifyContent: "center", flexShrink: 0,
+  },
+  recTitle: { fontSize: typography.size.sm, fontWeight: typography.weight.medium, color: palette.info.dark, marginBottom: 4 },
+  recText: { fontSize: typography.size.sm - 1, color: palette.info.dark, lineHeight: typography.size.sm * 1.6 },
 });

@@ -21,6 +21,9 @@ export default function ValidacionScreen({ params }: Props) {
     }
 
     return (
-        <PasoCodigo pedidoId={params.pedidoId}/>
+        <PasoCodigo
+            pedidoId={params.pedidoId}
+            onVolver={() => setPaso(1)} 
+        />
     );
 }
